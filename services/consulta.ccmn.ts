@@ -13,7 +13,7 @@ import { ConstantesApp } from '../utils/constantes-app';
 export class ConsultaCcmnService {
   //private RESOURCE_CONSULTA_DPMN: string = "/v1/controladuanero/prevencion/cuentacorrienteimpo/t/consultadpmn/generarreporte";
   //private RESOURCE_CONSULTA_DPMN: string = "/v1/controladuanero/prevencion/cuentacorrienteimpo/t/consultadpmn/generarreporte";
-  private RESOURCE_CONSULTA_CCMN: string = environment.urlBase + ConstantesApp.RESOURCE_CONSULTA_CCMN;
+  private RESOURCE_CONSULTA_CCMN: string = environment.urlBaseIntranet + ConstantesApp.RESOURCE_CONSULTA_CCMN;
 
   private ccmn: CcmnResumen[] = new Array();
   private rptCcmnResumen = new BehaviorSubject<any>(this.ccmn);
