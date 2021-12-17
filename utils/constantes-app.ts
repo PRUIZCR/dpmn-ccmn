@@ -4,15 +4,15 @@ export class ConstantesApp {
 
 
 
-  static readonly RESOURCE_RUC : string = "/v1/controladuanero/ruc/";
-  static readonly RESOURCE_PUESTO_CONTROL: string = "/v1/controladuanero/puestoscontrol/";
-  static readonly RESOURCE_EMPRESA_TRANS: string = "/v1/controladuanero/empresasdetranspinter/";
-  static readonly RESOURCE_CONSULTA_DPMN: string = "/v1/controladuanero/consultadpmn/generarreporte";
+  static readonly RESOURCE_RUC : string = "/v1/controladuanero/scci/ruc/";
+  static readonly RESOURCE_PUESTO_CONTROL: string = "/v1/controladuanero/scci/puestoscontrol/";
+  static readonly RESOURCE_EMPRESA_TRANS: string = "/v1/controladuanero/scci/empresasdetranspinter/";
+  static readonly RESOURCE_CONSULTA_DPMN: string = "/v1/controladuanero/scci/consultadpmn/generarreporte";
 
-  static readonly RESOURCE_ARCHIVOS_ADJUNTOS : string = "/v1/controladuanero/archivosadjuntodpmn/";
-  static readonly RESOURCE_DATOS_DECLARACION : string = "/v1/controladuanero/dpmns/";
-  static readonly RESOURCE_DATOS_DECLARACION_EXPORT_PDF : string = "/v1/controladuanero/consultadpmn/exportarpdf";
-  static readonly RESOURCE_DATOS_DECLARACION_EXPORT_EXCEL : string = "/v1/controladuanero/consultadpmn/exportarexcel";
+  static readonly RESOURCE_ARCHIVOS_ADJUNTOS : string = "/v1/controladuanero/scci/archivosadjuntodpmn/";
+  static readonly RESOURCE_DATOS_DECLARACION : string = "/v1/controladuanero/scci/dpmns/";
+  static readonly RESOURCE_DATOS_DECLARACION_EXPORT_PDF : string = "/v1/controladuanero/scci/consultadpmn/exportarpdf";
+  static readonly RESOURCE_DATOS_DECLARACION_EXPORT_EXCEL : string = "/v1/controladuanero/scci/consultadpmn/exportarexcel";
 
   
 
@@ -23,6 +23,7 @@ static readonly RESOURCE_DATOS_DECLARACION_EXPORT_PDF_CCMN : string = "/v1/contr
 static readonly RESOURCE_DATOS_DECLARACION_EXPORT_EXCEL_CCMN : string = "/v1/controladuanero/scci/consultaccmn/exportarexcel";
 static readonly RESOURCE_PUESTO_CONTROL_CCMN: string = "/v1/controladuanero/scci/puestoscontrol/";
 static readonly RESOURCE_EMPRESA_TRANS_CCMN: string = "/v1/controladuanero/scci/empresasdetranspinter/";
+static readonly RESOURCE_RUC_CCMN : string = "/v1/controladuanero/scci/ruc/";
 
 
   /**
