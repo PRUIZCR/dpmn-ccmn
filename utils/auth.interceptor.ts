@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ConstantesApp } from '../utils/constantes-app'
-import {  environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment';
 import {
   HttpRequest,
   HttpHandler,
@@ -22,10 +22,13 @@ export class AuthInterceptor implements HttpInterceptor {
     constructor(public dialogService: DialogService) {}
     intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
       if ( this.tieneUrlBaseEndpoint(request.url) ) {
-        const token: string|null = sessionStorage.getItem(ConstantesApp.KEY_SESSION_TOKEN);
+        const token: string = sessionStorage.getItem(ConstantesApp.KEY_SESSION_TOKEN)!;
+        console.log('token: ' + token);
         const authReq = request.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
+        console.log('Paso por el tieneUrlBaseEndpoint');
         return next.handle(authReq).pipe(catchError( err => this.handleAuthError(err)));
       } else {
+        console.log('Paso por el else de tieneUrlBaseEndpoint');
         return next.handle(request);
       }
     }
@@ -52,8 +55,10 @@ export class AuthInterceptor implements HttpInterceptor {
     this.URLS_BASE_ENDPOINTS.forEach( (urlBase: string) => {
       if ( url.indexOf(urlBase) > -1 ) {
         resultado = true;
+        console.log('urlBase' + urlBase);
         return;
       }
+     
     });
     return resultado;
   }
