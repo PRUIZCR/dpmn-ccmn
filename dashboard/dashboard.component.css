@@ -1,0 +1,26 @@
+section {
+  display: table;
+}
+
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+.example-button-row button,
+.example-button-row a {
+  margin-right: 8px;
+}
+
+.botones {
+  margin: 0 auto;
+}
+
+.ui-button {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
+
+div {
+  align-items: center;
+}
