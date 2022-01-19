@@ -38,6 +38,7 @@ export class DetalleComponent implements OnInit {
   desIdentificacion:string;
   nomEmpresa:string;
   flujoVehiculo:string;
+  codFlujoVehiculo:string;
   paisPlaca:string;
   nomPlaca:string;
   paisplacaCarreta:string;
@@ -211,6 +212,7 @@ export class DetalleComponent implements OnInit {
     }
     if(data.empresaTransporte.flujoVehiculo!= null){
       this.flujoVehiculo=data.empresaTransporte.flujoVehiculo.codDatacat + ' - '+data.empresaTransporte.flujoVehiculo.desDataCat;
+      this.codFlujoVehiculo=data.empresaTransporte.flujoVehiculo.codDatacat;
     }
     if(data.empresaTransporte.paisPlaca!= null){
     this.paisPlaca=data.empresaTransporte.paisPlaca.codDatacat + ' - '+ data.empresaTransporte.paisPlaca.desDataCat;
