@@ -240,23 +240,23 @@
           [rowsPerPageOptions]="[10,25,50]"  >
             <ng-template pTemplate="header">
                 <tr>
-                    <th>ID</th>
-                    <th *ngIf="tipoOrigen=='IT' else noFAguiaremitente">Guía remitente / Comprobante pago</th>
+                    <th style="width:5%">ID</th>
+                    <th style="width:5%" *ngIf="tipoOrigen=='IT' else noFAguiaremitente">Guía remitente / Comprobante pago</th>
                     <ng-template #noFAguiaremitente>
-                      <th  *ngIf="codFlujoVehiculo=='01' else noFAflujoVehiculo">Gu&iacute;a Remisi&oacute;n del Remitente /Carta Porte</th>
+                      <th style="width:5%" *ngIf="codFlujoVehiculo=='01' else noFAflujoVehiculo">Gu&iacute;a Remisi&oacute;n del Remitente /Carta Porte</th>
                     </ng-template>
                     <ng-template #noFAflujoVehiculo>
-                      <th>Gu&iacute;a Remisi&oacute;n del Remitente / Factura o Boleta</th>
+                      <th style="width:5%">Gu&iacute;a Remisi&oacute;n del Remitente / Factura o Boleta</th>
                     </ng-template>
-                    <th *ngIf="tipoOrigen=='IT' else noFAruc">RUC Remitente / Carta Porte</th>
+                    <th style="width:5%" *ngIf="tipoOrigen=='IT' else noFAruc">RUC Remitente / Carta Porte</th>
                     <ng-template #noFAruc>
-                      <th>RUC Remitente / Empresa</th>
+                      <th style="width:5%">RUC Remitente / Empresa</th>
                     </ng-template>
-                    <th *ngIf="tipoOrigen=='IT'">Raz&oacute;n Social Remitente / Empresa</th>
-                    <th>Motivo de traslado</th>
-                    <th>RUC del Destinatario</th>
-                    <th>Raz&oacute;n social Destinatario</th>
-                    <th>Destino</th>
+                    <th style="width:15%" *ngIf="tipoOrigen=='IT'">Raz&oacute;n Social Remitente / Empresa</th>
+                    <th style="width:15%">Motivo de traslado</th>
+                    <th style="width:20%">RUC del Destinatario</th>
+                    <th style="width:20%">Raz&oacute;n social Destinatario</th>
+                    <th style="width:20%">Destino</th>
 
                 </tr>
             </ng-template>
@@ -268,12 +268,12 @@
             <ng-template pTemplate="body" let-comprobantes let-rowIndex="rowIndex">
                 <tr>
                     <td style="width:5%">{{rowIndex + 1}}</td>
-                    <td style="width:10%">{{comprobantes.numGuia}} - {{comprobantes.numSerie}}</td>
-                    <td style="width:10%">{{guiaCarta(comprobantes)}}</td>
+                    <td style="width:5%">{{comprobantes.numGuia}} - {{comprobantes.numSerie}}</td>
+                    <td style="width:15%">{{guiaCarta(comprobantes)}}</td>
                     <td style="width:15%"  *ngIf="tipoOrigen=='IT'">{{guiaCartaDesc(comprobantes)}}</td>
                     <td style="width:15%">{{comprobantes.motivoDeTraslado.codDatacat}}-{{comprobantes.motivoDeTraslado.desDataCat}}</td>
-                    <td style="width:10%">{{comprobantes.numRucDestinatario}}</td>
-                    <td style="width:20%">{{comprobantes.desRazonSocialDestinatario}}</td>
+                    <td style="width:15%">{{comprobantes.numRucDestinatario}}</td>
+                    <td style="width:15%">{{comprobantes.desRazonSocialDestinatario}}</td>
                     <td style="width:15%">{{comprobantes.ubigeoDestino.nomDepartamento}}-{{comprobantes.ubigeoDestino.nomDistrito}}-{{comprobantes.ubigeoDestino.nomProvincia}}</td>
                   
                 </tr>
