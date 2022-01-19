@@ -1,0 +1,388 @@
+<div class="row">  
+  <div class="d-flex flex-row-reverse bd-highlight">
+    <div class="p-2 bd-highlight">
+      <!-- <a routerLink="../../lista">
+        <button pButton type="button" label="Retornar" ></button>
+      </a> -->
+      <p-button class= "ui-button" label="Retornar" [loading]="loadingConsultar" (click)="retornar()"></p-button>
+    </div>
+  </div>
+</div>
+<br>
+<div class="card border-primary mb-3" style="max-width: 100%;">
+<div class="card-header bg-primary" style="background-color: #4683df;">
+  <div class="p-2 flex-grow-1 bd-highlight " style="color: white; font-weight:bold" >Consulta de {{urlConsultaDetalleTitulo }} N° {{numeroDeDocumentoDescarga}} </div>
+</div>
+<div class="card-body text-primary"  style="border-color: #4683df;">
+  <p-accordion [multiple]="true">
+    
+     <p-accordionTab header="Datos de la Aduana / Lugar de Control">
+      <fieldset class="form-group scheduler-border" >
+  
+        <legend class="scheduler-border">Datos de la Aduana / Lugar de Control</legend>
+        <div class="row">
+          <div class="col-2">
+            <label for="txtAduanaDescarga">Aduana de Descarga:</label>
+          </div>
+          <div class="col-4">
+            <input type="text" class="form-control" id="txtAduanaDescarga" name="txtAduanaDescarga" 
+            [(ngModel)]="aduanaDescarga" disabled>
+          </div>
+
+          <div class="col-2">
+            <label for="txtPuestoControl">Puesto de Control:</label>
+          </div>
+          <div class="col-4">
+            <input type="text" class="form-control" id="txtPuestoControl" name="txtPuestoControl" 
+            [(ngModel)]="puestoControlDescarga" disabled>
+          </div>
+        </div>
+      </fieldset>
+  </p-accordionTab>
+    
+    
+    <p-accordionTab header="Datos de la Empresa de Transporte">
+    
+      <fieldset class="form-group scheduler-border" >
+          <div class="row">  
+            <div class="col-md-6">
+                <p-fieldset >
+                  <ng-template pTemplate="header" class="myStyle">Datos de la Empresa de Transporte</ng-template>
+                  <div class="row" >
+
+                    <!--<td><mat-label>Tipo Nacionalidad</mat-label></td>-->
+
+                    <div class="row mb-3">
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Tipo Nacionalidad:</label>
+                      <div class="col-sm-9 col-form-label col-form-label-sm">
+                        <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder=""
+                        [(ngModel)]="tipoNacionalidad"  disabled>
+                      
+                      </div>
+                    </div>
+                    <div class="row mb-3" *ngIf="numeroTipoDocum=='2'">
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">País Empresa:</label>
+                      <div class="col-sm-4 col-form-label col-form-label-sm">
+                        <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder="" 
+                        [(ngModel)]="paisEmpresa" disabled>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Identificación:</label>
+                      <div class="col-sm-4">
+                        <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder=""
+                        [(ngModel)]="tipoIdentificacion" disabled>
+                      </div>
+                      <div class="col-sm-5">
+                        <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder="" 
+                        [(ngModel)]="desIdentificacion" disabled>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Nombre:</label>
+                      <div class="col-sm-9 col-form-label col-form-label-sm">
+                        <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder=""
+                        [(ngModel)]="nomEmpresa"  disabled>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Flujo de Vehículo:</label>
+                      <div class="col-sm-4 col-form-label col-form-label-sm">
+                        <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder=""
+                        [(ngModel)]="flujoVehiculo"  disabled>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">País Placa:</label>
+                      <div class="col-sm-4 col-form-label col-form-label-sm">
+                        <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder="" 
+                        [(ngModel)]="paisPlaca" disabled>
+                      </div>
+                      <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Placa:</label>
+                      <div class="col-sm-3 col-form-label col-form-label-sm">
+                        <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder=""
+                        [(ngModel)]="nomPlaca" disabled>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">País Placa carreta:</label>
+                      <div class="col-sm-4 col-form-label col-form-label-sm">
+                        <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder=""
+                        [(ngModel)]="paisplacaCarreta" disabled>
+                      </div>
+                      <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Placa carreta:</label>
+                      <div class="col-sm-3 col-form-label col-form-label-sm">
+                        <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder=""
+                        [(ngModel)]="nomPlacaCarreta" disabled>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Correo electrónico:</label>
+                      <div class="col-sm-9 col-form-label col-form-label-sm">
+                        <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder=""
+                        [(ngModel)]="valEmail" disabled>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Número Telefonico:</label>
+                      <div class="col-sm-9 col-form-label col-form-label-sm">
+                        <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder="" 
+                        [(ngModel)]="numTelefono" disabled>
+                      </div>
+                    </div>
+
+                  </div>
+                </p-fieldset>
+            </div>
+        
+            <div class="col-md-6">
+              <p-fieldset class="form-group scheduler-border">
+                <ng-template pTemplate="header">Datos del Conductor</ng-template>
+              
+                <div class="row">
+                    <div class="row mb-3">
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Nacionalidad:</label>
+                      <div class="col-sm-9 col-form-label col-form-label-sm">
+                        <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder="" 
+                        [(ngModel)]="nacionalidad" disabled>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Identificación:</label>
+                      <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Tipo de documento:</label>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm"></label>
+                      <div class="col-sm-9 col-form-label col-form-label-sm">
+                        <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder="" 
+                        [(ngModel)]="tipoDocumentoConductor" disabled>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm"> &nbsp;</label>
+                        <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Num. de documento:</label>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm"></label>
+                      <div class="col-sm-9 col-form-label col-form-label-sm">
+                        <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder="" 
+                        [(ngModel)]="numDocIdentidad" disabled>
+                      </div>
+                    </div>
+                  
+                    <div class="row mb-3">
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Nombre Conductor:</label>
+                      <div class="col-sm-9 col-form-label col-form-label-sm">
+                        <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder="" 
+                        [(ngModel)]="nomConductor" disabled>
+                        <br>
+                        <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder="" 
+                        [(ngModel)]="apeConductor" disabled>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">N&uacute;mero de Licencia:</label>
+                      <div class="col-sm-9 col-form-label col-form-label-sm">
+                        <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder=""
+                        [(ngModel)]="numLicencia"  disabled>
+                      </div>
+                    </div>
+                        <tr>
+                          <td></td>
+                          <td> &nbsp; </td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td> &nbsp; </td>
+                        </tr>
+                </div>
+              </p-fieldset>
+            </div>
+        </div>
+      </fieldset>
+    
+
+    </p-accordionTab>
+    <p-accordionTab header="Datos Complementarios">
+        <fieldset class="form-group scheduler-border" >
+    
+          <legend class="scheduler-border">Datos Complementarios</legend>
+          <div class="row">
+            <div class="col-1">
+              <label for="txtOrigen">Origen:</label>
+            </div>
+            <div class="col-5">
+              <input type="text" class="form-control" id="txtOrigen" name="txtOrigen" 
+              [(ngModel)]="ubigeoOrigen" disabled>
+            </div>
+
+            <div class="col-1">
+              <label for="txtObservacion">Observaci&oacute;n:</label>
+            </div>
+            <div class="col-5">
+              <input type="text" class="form-control" id="txtObservacion" name="txtObservacion" 
+              [(ngModel)]="desObservacion" disabled>
+            </div>
+          </div>
+        </fieldset>
+    </p-accordionTab>
+    <p-accordionTab header="Datos del Comprobante de Pago/Carta Porte">
+      <fieldset class="form-group scheduler-border" >
+        <!--<legend class="scheduler-border">Datos del Comprobante de Pago / Carta Porte</legend>-->
+        <div class="row">
+          <p-table
+          #dt1 [value]="comprobantes"
+          [paginator]="true"
+          [rows]="10"
+          [showCurrentPageReport]="true"
+          currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+          styleClass="p-datatable-sm"
+          [rowsPerPageOptions]="[10,25,50]"  >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>ID</th>
+                    <th *ngIf="tipoOrigen=='IT' else noFAguiaremitente">Guía remitente / Comprobante pago</th>
+                    <ng-template #noFAguiaremitente>
+                      <th>Gu&acute;a Remisi&oacute;n del Remitente /Carta Porte</th>
+                    </ng-template>
+                    <th *ngIf="tipoOrigen=='IT' else noFAruc">RUC Remitente / Carta Porte</th>
+                    <ng-template #noFAruc>
+                      <th>RUC Remitente / Empresa</th>
+                    </ng-template>
+                    <th *ngIf="tipoOrigen=='IT'">Raz&oacute;n Social Remitente / Empresa</th>
+                    <th>Motivo de traslado</th>
+                    <th>RUC del Destinatario</th>
+                    <th>Raz&oacute;n social Destinatario</th>
+                    <th>Destino</th>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr >
+                <td colspan = "9" class="text-center">No hay registros</td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-comprobantes let-rowIndex="rowIndex">
+                <tr>
+                    <td>{{rowIndex + 1}}</td>
+                    <td>{{comprobantes.numGuia}} - {{comprobantes.numSerie}}</td>
+                    <td>{{guiaCarta(comprobantes)}}</td>
+                    <td *ngIf="tipoOrigen=='IT'">{{guiaCartaDesc(comprobantes)}}</td>
+                    <td>{{comprobantes.motivoDeTraslado.codDatacat}}-{{comprobantes.motivoDeTraslado.desDataCat}}</td>
+                    <td>{{comprobantes.numRucDestinatario}}</td>
+                    <td>{{comprobantes.desRazonSocialDestinatario}}</td>
+                    <td>{{comprobantes.ubigeoDestino.nomDepartamento}}-{{comprobantes.ubigeoDestino.nomDistrito}}-{{comprobantes.ubigeoDestino.nomProvincia}}</td>
+                  
+                </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </fieldset>
+    </p-accordionTab>
+    <p-accordionTab header="Datos de la Declaraci&oacute;n de Importación">
+      <fieldset class="form-group scheduler-border" >
+        <!--<legend class="scheduler-border">Datos de la Declaraci&oacute;n </legend>-->
+        <div class="row">
+          <p-table
+          #dt1 [value]="seriesDeclaracionDpmn"
+          [paginator]="true"
+          [responsive]="true"
+          [rows]="10"
+          [showCurrentPageReport]="true"
+          currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+          styleClass="p-datatable-sm"
+          [rowsPerPageOptions]="[10,25,50]"  >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width:5%">ID</th>
+                    <th style="width:10%" class="text-center">DAM/DSI</th>
+                    <th style="width:5%" class="text-center">Serie</th>
+                    <th style="width:10%" class="text-center">Sub Partida</th>
+                    <th style="width:15%" class="text-center">Descripci&oacute;n Comercial</th>
+                    <th style="width:5%" class="text-right" >Peso Bruto</th>
+                    <th style="width:5%" class="text-right" >Peso Neto</th>
+                    <th style="width:10%" class="text-center" >Cantidad Declarada (UF)</th>
+                    <th style="width:10%" class="text-center" >Cantidad Retirada (UF)</th>
+                    <th style="width:10%" class="text-center" *ngIf="numeroTipoDocum=='1'">Secuencia de descarga</th>
+                    <th style="width:10%" class="text-center" *ngIf="numeroTipoDocum=='1'">Saldo</th>
+                    <th style="width:5%" class="text-center" >Unidad F&iacute;sica</th>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr >
+                <td colspan = "10" class="text-center">No hay registros</td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-seriesDeclaracionDpmn let-rowIndex="rowIndex">
+                <tr>
+                    <td style="width:5%">{{rowIndex + 1}}</td>
+                    <!--<td>{{seriesDeclaracionDpmn.aduanaDam.codDatacat}}-{{seriesDeclaracionDpmn.regimenDam.codDatacat}}-
+                      {{seriesDeclaracionDpmn.annDam}}-{{seriesDeclaracionDpmn.numDam}}</td>-->
+                    <td style="width:10%">{{seriesDeclaracionDpmn.dam}}</td>
+                    <td style="width:5%">{{seriesDeclaracionDpmn.numSerie}}</td>
+                    <td style="width:10%">{{seriesDeclaracionDpmn.codSubPartida}}</td>
+                    <td style="width:15%" >{{seriesDeclaracionDpmn.desComercial}}</td>
+                    <td style="width:10%"style="text-align:right">{{seriesDeclaracionDpmn.mtoPesoBruto}}</td>
+                    <td style="width:10%" style="text-align:right">{{seriesDeclaracionDpmn.mtoPesoNeto}}</td>
+                    <td style="width:7%" style="text-align:right">{{seriesDeclaracionDpmn.cntUnidadFisica}}</td>
+                    <td style="width:8%" style="text-align:right">{{seriesDeclaracionDpmn.cntRetirada}}</td>
+                    <td style="width:5%" style="text-align:right" *ngIf="numeroTipoDocum=='1'">{{seriesDeclaracionDpmn.numSecDescarga}}</td>
+                    <td style="width:10%" style="text-align:right" *ngIf="numeroTipoDocum=='1'">{{seriesDeclaracionDpmn.cntSaldo}}</td>
+                    <td style="width:5%" style="text-align:center">{{seriesDeclaracionDpmn.unidadFisica.codDatacat}}</td>
+                </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </fieldset>
+    </p-accordionTab>
+    <p-accordionTab header="Archivos Adjuntos">
+      <fieldset class="form-group scheduler-border" >
+        <!--<legend class="scheduler-border">Datos del Comprobante de Pago / Carta Porte</legend>-->
+        <div class="row">
+          <p-table
+          #dt1 [value]="documentosAdjuntos"
+          [paginator]="true"
+          [rows]="10"
+          [showCurrentPageReport]="true"
+          currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+          styleClass="p-datatable-sm"
+          [rowsPerPageOptions]="[10,25,50]"  >
+            <ng-template pTemplate="header">
+                <tr>
+                <th style="width:7%">&Iacute;tem</th>
+                <th style="text-align:left" style="width:20%">Tipo de documento</th>
+                <th class="text-center" style="width:53%">Archivo</th>
+                <th style="text-align:left" style="width:20%">Fecha y hora del registro</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr >
+                <td colspan = "9" class="text-center">No hay registros</td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-documentosAdjuntos let-rowIndex="rowIndex">
+              <tr>
+                <td style="width:7%">{{rowIndex + 1}}</td>
+                <td style="text-align:left" style="width:20%">{{documentosAdjuntos.codTipoDocumento}}-{{documentosAdjuntos.desTipoDocumento}}</td>
+                <td  *ngIf="tipoOrigen=='IA' else noIntranet">
+                  <button  type="button" class="btn btn-link text-wrap"  (click)="downloadPDFExcelCcmnDpmn(documentosAdjuntos.codArchivoEcm,documentosAdjuntos.nomArchivo)" style="width:100%;">{{documentosAdjuntos.nomArchivo}}
+                  </button>
+                </td>
+                <ng-template #noIntranet>
+                <td>
+                <button  type="button" class="btn btn-link text-wrap"  (click)="downloadPDFExcel(documentosAdjuntos.codArchivoEcm,documentosAdjuntos.nomArchivo)" style="width:100%;">{{documentosAdjuntos.nomArchivo}}
+                </button>
+                </td>
+                </ng-template>
+
+                <td style="text-align:left" style="width:20%">{{documentosAdjuntos.fecRegistro | date:'dd/MM/yyyy HH:mm'  }}</td>
+              </tr>
+          </ng-template>
+          </p-table>
+        </div>
+      </fieldset>
+    </p-accordionTab>
+  </p-accordion>
+</div>
+</div>

@@ -1,0 +1,311 @@
+<div class="card" >
+    <div class="card border-primary mb-6" style="max-width: 100%;">
+        <div class="card-header bg-primary" style="background-color: #4683df;">
+            <div class="d-flex bd-highlight">
+               
+                    <div  class="p-2 flex-grow-1 bd-highlight " style="color: white; font-weight:bold">
+                        <strong> Reporte Resumido {{urlConsultaDetalleTitulo }}</strong>
+                    </div>  
+                    <div class class="p-2 flex-grow-1 bd-highlight " style="color: white; font-weight:bold" ></div>
+                    <div class="p-2 bd-highlight">
+                        <button type="button" (click)="exportarpdfResumido('reporteResumidoDpmnCcmn.pdf')" class="btn btn-warning">Exportar a PDF</button>
+                    </div>
+                    <div class="p-2 bd-highlight">
+                        <!-- <p-button class= "ui-button" label="Retornar button"  (click)="retornar()"></p-button> -->
+                        <a [routerLink]="['../../lista',this.tipoDocumentoform]" style="text-decoration:none">
+                            <button type="button"  class="btn btn-info ">Retornar</button>
+                        </a>
+                    </div>
+
+             </div>  
+        </div>
+    </div>    
+
+    <div class="row">   
+
+        <div class="col-md-6">
+            <div class="card border-primary mb-3" style="max-width: 100%;">
+                <div class="card-header text-center"    >Totales Por Aduana</div>
+                <div class="row">
+                    <p-table
+                    #dt1 [value]="totalesAduana"
+                    [paginator]="false"
+                    [rows]="5"
+                    [showCurrentPageReport]="true"
+                    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+                    styleClass="p-datatable-sm"
+                    [rowsPerPageOptions]="[5,10,25,50]"  >
+                      <ng-template pTemplate="header">
+                          <tr>
+                              <th class="text-center" style="width:10%">ID</th>
+                              <th class="text-center" style="width:30%">Aduana</th>
+                              <th class="text-center" style="width:30%">Tipo</th>
+                              <th class="text-center" style="width:30%">Cantidad</th>
+                          </tr>
+                      </ng-template>
+                      <ng-template pTemplate="emptymessage">
+                        <tr >
+                          <td colspan = "3" class="text-center">No hay registros</td>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-totalesAduana let-rowIndex="rowIndex">
+                          <tr>
+                              <td class="text-center">{{rowIndex + 1}}</td>
+                              <td class="text-center">{{totalesAduana.concepto.codDatacat}} - {{totalesAduana.concepto.desDataCat}}</td>
+                              <td class="text-center" *ngIf="tipoDocumentoform=='1'  else nolstDpmn">CCMN </td>
+                              <ng-template #nolstDpmn>
+                                <td class="text-center">DPMN </td>
+                                </ng-template>
+                              <td class="text-center">{{totalesAduana.cantidad}}</td>
+                          </tr>
+                      </ng-template>
+                    </p-table>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-sm-8 text-center" >
+                            Total:
+                        </div>
+                        <div class="col-sm-4 text-center"> 
+                                {{totalesPorAduanasDocum}}                           
+                        </div>
+                    </div>
+                  </div>
+            </div>
+
+            <div class="card border-primary mb-3" style="max-width: 100%;">
+                <div class="card-header text-center">Totales por Tipo de Control</div>
+                <div class="row">
+                    <p-table
+                    #dt1 [value]="totalesTipoControl"
+                    [paginator]="false"
+                    [rows]="5"
+                    [showCurrentPageReport]="true"
+                    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+                    styleClass="p-datatable-sm"
+                    [rowsPerPageOptions]="[5,10,25,50]"  >
+                      <ng-template pTemplate="header">
+                          <tr>
+                              <th class="text-center" style="width:10%">ID</th>
+                              <th class="text-center" style="width:70%">Tipo de Control</th>
+                              <th class="text-center" style="width:20%">Cantidad</th>
+          
+                          </tr>
+                      </ng-template>
+                      <ng-template pTemplate="emptymessage">
+                        <tr >
+                          <td colspan = "3" class="text-center">No hay registros</td>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-totalesTipoControl let-rowIndex="rowIndex">
+                          <tr>
+                              <td  class="text-center">{{rowIndex + 1}}</td>
+                              <td  class="text-center" *ngIf="totalesTipoControl.concepto.codDatacat">{{totalesTipoControl.concepto.codDatacat}} - {{totalesTipoControl.concepto.desDataCat}}</td>
+                              <td  class="text-center" *ngIf="!totalesTipoControl.concepto.codDatacat">No tiene</td>
+                              <td  class="text-center" *ngIf="totalesTipoControl.concepto.codDatacat">{{totalesTipoControl.cantidad}}</td>
+                              <td  class="text-center" *ngIf="!totalesTipoControl.concepto.codDatacat">{{totalesTipoControl.cantidad}}</td>
+                            
+                          </tr>
+                      </ng-template>
+                    </p-table>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-sm-8 text-center" >
+                            Total:
+                        </div>
+                        <div class="col-sm-4 text-center"> 
+                                {{totalesPorTipoDocum}}                           
+                        </div>
+                    </div>
+                  </div>
+            </div>
+
+            <div class="card border-primary mb-3" style="max-width: 100%;">
+                <div class="card-header text-center">Totales por Usuario Externo</div>
+                <div class="row">
+                    <p-table
+                    #dt1 [value]="totalesUsuarioExterno"
+                    [paginator]="false"
+                    [rows]="5"
+                    [showCurrentPageReport]="true"
+                    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+                    styleClass="p-datatable-sm"
+                    [rowsPerPageOptions]="[5,10,25,50]"  >
+                      <ng-template pTemplate="header">
+                          <tr>
+                              <th class="text-center" style="width:10%">ID</th>
+                              <th class="text-center" style="width:70%">Usuario</th>
+                              <th class="text-center" style="width:20%">Cantidad</th>
+          
+                          </tr>
+                      </ng-template>
+                      <ng-template pTemplate="emptymessage">
+                        <tr >
+                          <td colspan = "3" class="text-center">No hay registros</td>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-totalesUsuarioExterno let-rowIndex="rowIndex">
+                          <tr>
+                              <td class="text-center" >{{rowIndex + 1}}</td>
+                              <td class="text-center" >{{totalesUsuarioExterno.concepto.codDatacat}} - {{totalesUsuarioExterno.concepto.desDataCat}}</td>
+                              <td class="text-center" >{{totalesUsuarioExterno.cantidad}}</td>               
+                          </tr>
+                      </ng-template>
+                    </p-table>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-sm-8 text-center" >
+                            Total:
+                        </div>
+                        <div class="col-sm-4 text-center"> 
+                                {{totalesPorUsuarioExterno}}                           
+                        </div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+
+            <div class="col-md-6">
+
+                <div class="card border-primary mb-3" style="max-width: 100%;"  *ngIf="tipoDocumentoform=='1' else nolstDpmn">
+                    <div class="card-header text-center">Totales por Estado de CCMN</div>
+                    <div class="row">
+                        <p-table
+                        #dt1 [value]="totalesEstado"
+                        [paginator]="false"
+                        [rows]="5"
+                        [showCurrentPageReport]="true"
+                        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+                        styleClass="p-datatable-sm"
+                        [rowsPerPageOptions]="[5,10,25,50]"  >
+                          <ng-template pTemplate="header">
+                              <tr>
+                                  <th class="text-center" style="width:10%">ID</th>
+                                  <th class="text-center" style="width:45%">Estado</th>
+                                  <th class="text-center" style="width:45%">Cantidad</th>
+              
+                              </tr>
+                          </ng-template>
+                          <ng-template pTemplate="emptymessage">
+                            <tr >
+                              <td colspan = "3" class="text-center">No hay registros</td>
+                            </tr>
+                          </ng-template>
+                          <ng-template pTemplate="body" let-totalesEstado let-rowIndex="rowIndex">
+                              <tr>
+                                  <td class="text-center" >{{rowIndex + 1}}</td>
+                                  <td class="text-center" >{{totalesEstado.concepto.codDatacat}} - {{totalesEstado.concepto.desDataCat}}</td>
+                                  <td class="text-center" >{{totalesEstado.cantidad}}</td>
+                                
+                              </tr>
+                          </ng-template>
+                        </p-table>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-sm-7 text-center" >
+                                Total:
+                            </div>
+                            <div class="col-sm-5 text-center"> 
+                                    {{totalesPorEstadoDocum}}                           
+                            </div>
+                </div>
+                      </div>
+                </div>
+                <ng-template #nolstDpmn>
+                <div class="card border-primary mb-3" style="max-width: 100%;">
+                    <div class="text-center"  class="card-header text-center">Totales por Estado de DPMN</div>
+                    <div class="row">
+                        <p-table
+                            #dt1 [value]="totalesEstado"
+                        [paginator]="true"
+                        [rows]="5"
+                        [showCurrentPageReport]="true"
+                        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+                        styleClass="p-datatable-sm"
+                        [rowsPerPageOptions]="[5,10,25,50]"  >
+                          <ng-template pTemplate="header">
+                              <tr>
+                                  <th class="text-center" style="width:10%">ID</th>
+                                  <th class="text-center" style="width:45%">Estado</th>
+                                  <th class="text-center" style="width:45%">Cantidad</th>
+              
+                              </tr>
+                          </ng-template>
+                          <ng-template pTemplate="emptymessage">
+                            <tr >
+                              <td colspan = "3" class="text-center">No hay registros</td>
+                            </tr>
+                          </ng-template>
+                            <ng-template pTemplate="body" let-totalesEstado let-rowIndex="rowIndex">
+                              <tr>
+                                    <td class="text-center" >{{rowIndex + 1}}</td>
+                                    <td class="text-center" >{{totalesEstado.concepto.codDatacat}} - {{totalesEstado.concepto.desDataCat}}</td>
+                                    <td class="text-center" >{{totalesEstado.cantidad}}</td>
+                              </tr>
+                          </ng-template>
+                        </p-table>
+                    </div>
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col-sm-8 text-center" >
+                                    Total:
+                                </div>
+                                <div class="col-sm-4 text-center"> 
+                                        {{totalesPorEstadoDocum}}                           
+                                </div>
+                            </div>
+                </div>
+                    </div>
+                </ng-template>
+                <div class="card border-primary mb-3" style="max-width: 100%;">
+                    <div class="card-header text-center">Totales por Funcionario Aduanero</div>
+                    <div class="row">
+                        <p-table
+                        #dt1 [value]="totalesFuncionarioAduanero"
+                        [paginator]="false"
+                        [rows]="5"
+                        [showCurrentPageReport]="true"
+                        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+                        styleClass="p-datatable-sm"
+                        [rowsPerPageOptions]="[5,10,25,50]"  >
+                          <ng-template pTemplate="header">
+                              <tr>
+                                  <th class="text-center" style="width:30%">ID</th>
+                                  <th class="text-center" style="width:60%">Funcionario Aduanero</th>
+                                  <th class="text-center" style="width:10%">Cantidad</th>
+              
+                              </tr>
+                          </ng-template>
+                          <ng-template pTemplate="emptymessage">
+                            <tr >
+                              <td colspan = "3" class="text-center">No hay registros</td>
+                            </tr>
+                          </ng-template>
+                          <ng-template pTemplate="body" let-totalesFuncionarioAduanero let-rowIndex="rowIndex">
+                              <tr>
+                                  <td class="text-center" style="width:30%">{{rowIndex + 1}}</td>
+                                  <td class="text-center" style="width:60%">{{totalesFuncionarioAduanero.concepto.codDatacat}}</td>
+                                  <td class="text-center" style="width:10%">{{totalesFuncionarioAduanero.cantidad}}</td>
+                              </tr>
+                          </ng-template>
+                        </p-table>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-sm-8 text-center" >
+                                Total:
+                            </div>
+                            <div class="col-sm-4 text-center"> 
+                                    {{totalesPorFuncionarioAduanero}}                           
+                            </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+
+    </div>
+
+</div>

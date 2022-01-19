@@ -1,0 +1,137 @@
+   <div class="card" >
+              <!-- <p-toolbar styleClass="p-mb-4">
+                  <ng-template pTemplate="left">
+                  </ng-template>
+                  <ng-template pTemplate="right">
+                      <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+                  </ng-template>
+            </p-toolbar> -->
+      <div class="card border-primary mb-3" style="max-width: 100%;">
+        <div class="card-header bg-primary" style="background-color: #4683df;">
+          <div class="d-flex bd-highlight">
+           
+            <div class="p-2 bd-highlight">Consulta de {{urlConsultaListaTitulo }}</div>
+            <div class class="p-2 flex-grow-1 bd-highlight " style="color: white; font-weight:bold" ></div>
+            <div class="p-2 bd-highlight">
+              <button type="button" [routerLink]="['../../reporte',this.tipDocumForm]" class="btn btn-info" *ngIf="tipoOrigen=='IA'">Reporte Resumido</button>
+            </div>
+            <div class="p-2 bd-highlight">
+              <button type="button" (click)="exportarpdf('reporteDpmnCcmn.pdf',this.tipDocumForm)" class="btn btn-warning">Exportar a PDF</button>
+            </div>
+            <div class="p-2 bd-highlight">
+              <button type="button" (click)="exportarexcel('reporteDpmnCcmn.xlsx',this.tipDocumForm)" class="btn btn-success">Exportar a Excel</button>
+              </div>
+            </div>
+        </div>
+
+        <p-table #dt [value]="lstDpmn" responsiveLayout="scroll" 
+          dataKey="id"
+          [rows]="10"
+          [paginator]="true"
+          [showCurrentPageReport]="true"
+          [rowsPerPageOptions]="[10,25,50]"
+          [loading]="loading"
+          styleClass="p-datatable-lstDpmn"
+          [paginator]="true"
+          [lazy]="false"
+          currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+          [globalFilterFields]="['numeroDeDocumentoDescarga']" >
+          
+          <ng-template pTemplate="caption">
+            <div class="p-d-flex">
+              <span class="p-input-icon-left p-ml-auto">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text"
+                        (input)="dt.filterGlobal($any($event.target ).value, 'contains')" style="width:auto" placeholder="Filtro por N° de Documento" />
+                    </span>
+            </div>
+          </ng-template>
+
+              <ng-template pTemplate="header" >
+                  <tr>
+                      <th style="width:2%">&Iacute;tem</th>
+                      <th style="width:10%">N° de Documento</th>
+                      <th style="width:8%">Estado</th>
+                      <th style="width:10%">Placa</th>
+                      <th style="width:10%">Placa Carreta</th>
+                      <th style="width:5%">Flujo Veh&iacute;culo</th>
+                      <th style="width:10%">Fecha Registro</th>
+                      <th class="text-center" style="width:10%">Primer RUC Remitente</th>
+                      <th class="text-center" style="width:5%" >Series</th>
+                      <th style="width:5%">Controles</th>
+                      <th class="text-center" style="width:10%">Fecha &uacute;lt. control</th>
+                      <th class="text-center" style="width:5%">&Uacute;lt. tipo control</th>
+                      <th class="text-center" style="width:10%" *ngIf="tipoOrigen=='IA'">Funcionario Aduanero</th>
+                  </tr>
+                  <!--<tr>
+                    <th><p-columnFilter type="text" field="id"></p-columnFilter></th>
+                    <th><p-columnFilter type="text" field="country.name"></p-columnFilter></th>
+                    </tr>-->
+              </ng-template>
+
+              <ng-template pTemplate="body" let-lstDpmn let-rowIndex="rowIndex" >
+
+                  <tr>
+                      <td>{{rowIndex + 1}}</td>
+                      <!--<td><span><a [routerLink]='' [queryParams]='{key1:documentos[1200]}' style="color: blue;">{{documentos.numeroDeDocumentoDescarga}}</a></span></td>-->
+                      <td><a [routerLink]="['../../detalles',lstDpmn.numCorrelativo,this.tipDocumForm]" (click)="onLoadServer(this.tipDocumForm,lstDpmn.numeroDeDocumentoDescarga)">{{lstDpmn.numeroDeDocumentoDescarga}}</a></td>
+                      <td>{{lstDpmn.estado.desDataCat}}</td>
+                      <td>{{valpaisPlaca(lstDpmn)}}{{ valPlaca(lstDpmn)}}</td>
+                      <td>{{valPlacaCarreta(lstDpmn)}}</td>
+                      <td>{{lstDpmn.flujoVehiculo.desDataCat}}</td>
+                      <td>{{lstDpmn.fechaDeRegistro}}</td>
+                      <td>{{lstDpmn.rucDelRemitente}}</td>
+                      <td>{{lstDpmn.cantidadDeSeries}}</td>
+                      <td>{{lstDpmn.cantidadDeControles}}</td>
+                      <td>{{lstDpmn.fechaDelUltimoControl}}</td>
+                      <!--<td><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                        [attr.fill]="colorCanalControl" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                      <circle cx="8" cy="8" r="8"/>
+                      </svg></td>-->
+                      
+                      <td style="text-align:center"  *ngIf="lstDpmn.canalDelUltimoControl.codDatacat=='F' else nolstDpmn">
+                         <!--<img src="../../../assets/images/rojo.jpg">-->
+                           <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                          [attr.fill]="colorRed" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                          <circle cx="8" cy="8" r="8"/> </svg>
+                      </td>
+                      <ng-template #nolstDpmn>
+                      <td style="text-align:center" *ngIf="lstDpmn.canalDelUltimoControl.codDatacat=='D' else nolstDpmn2">
+                        <!--<img src="../../../assets/images/naranja.jpg">-->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                        [attr.fill]="colorNaranja" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                        <circle cx="8" cy="8" r="8"/> </svg>
+                      </td>
+                      </ng-template>
+                      <ng-template #nolstDpmn2>
+                        <td></td>
+                      </ng-template>
+                        <td *ngIf="tipoOrigen=='IA'">{{lstDpmn.codigoRegistro}}</td>
+                  </tr>
+                  
+                
+              </ng-template>
+             
+              <ng-template pTemplate="emptymessage">
+                <tr>
+                  <td colspan="4" class="text-center" text-align="center">No hay Registros</td>
+                </tr>
+              </ng-template>
+          </p-table>
+ 
+         
+   
+          <router-outlet></router-outlet>
+      </div>
+     
+</div>
+<br>
+<div class="row">  
+
+    <div class="d-flex justify-content-center">
+      <a routerLink="../" style="text-decoration:none">
+        <button pButton type="button" label="Cancelar" ></button>
+      </a>
+    </div>
+
+</div>
