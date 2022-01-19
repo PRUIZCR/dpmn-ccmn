@@ -220,7 +220,6 @@ export class DetalleComponent implements OnInit {
     if(data.empresaTransporte.nomPlaca!= null){
     this.nomPlaca=data.empresaTransporte.nomPlaca;
     }
-   
     let errorPPC = data.empresaTransporte.paisPlacaCarreta;
     if (errorPPC != null) {
         this.paisplacaCarreta=data.empresaTransporte.paisPlacaCarreta.codDatacat+ ' - '+ data.empresaTransporte.paisPlacaCarreta.desDataCat;
@@ -232,7 +231,6 @@ export class DetalleComponent implements OnInit {
     if(data.empresaTransporte.valEmail!= null){
       this.valEmail=data.empresaTransporte.valEmail;
     }
-
     if(data.empresaTransporte.numTelefono!= null){
     this.numTelefono=data.empresaTransporte.numTelefono;
     }

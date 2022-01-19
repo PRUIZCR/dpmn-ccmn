@@ -243,7 +243,10 @@
                     <th>ID</th>
                     <th *ngIf="tipoOrigen=='IT' else noFAguiaremitente">Guía remitente / Comprobante pago</th>
                     <ng-template #noFAguiaremitente>
-                      <th>Gu&acute;a Remisi&oacute;n del Remitente /Carta Porte</th>
+                      <th  *ngIf="codFlujoVehiculo=='01' else noFAflujoVehiculo">Gu&iacute;a Remisi&oacute;n del Remitente /Carta Porte</th>
+                    </ng-template>
+                    <ng-template #noFAflujoVehiculo>
+                      <th>Gu&iacute;a Remisi&oacute;n del Remitente / Factura o Boleta</th>
                     </ng-template>
                     <th *ngIf="tipoOrigen=='IT' else noFAruc">RUC Remitente / Carta Porte</th>
                     <ng-template #noFAruc>
