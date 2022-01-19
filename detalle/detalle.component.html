@@ -267,14 +267,14 @@
             </ng-template>
             <ng-template pTemplate="body" let-comprobantes let-rowIndex="rowIndex">
                 <tr>
-                    <td>{{rowIndex + 1}}</td>
-                    <td>{{comprobantes.numGuia}} - {{comprobantes.numSerie}}</td>
-                    <td>{{guiaCarta(comprobantes)}}</td>
-                    <td *ngIf="tipoOrigen=='IT'">{{guiaCartaDesc(comprobantes)}}</td>
-                    <td>{{comprobantes.motivoDeTraslado.codDatacat}}-{{comprobantes.motivoDeTraslado.desDataCat}}</td>
-                    <td>{{comprobantes.numRucDestinatario}}</td>
-                    <td>{{comprobantes.desRazonSocialDestinatario}}</td>
-                    <td>{{comprobantes.ubigeoDestino.nomDepartamento}}-{{comprobantes.ubigeoDestino.nomDistrito}}-{{comprobantes.ubigeoDestino.nomProvincia}}</td>
+                    <td style="width:5%">{{rowIndex + 1}}</td>
+                    <td style="width:10%">{{comprobantes.numGuia}} - {{comprobantes.numSerie}}</td>
+                    <td style="width:10%">{{guiaCarta(comprobantes)}}</td>
+                    <td style="width:15%"  *ngIf="tipoOrigen=='IT'">{{guiaCartaDesc(comprobantes)}}</td>
+                    <td style="width:15%">{{comprobantes.motivoDeTraslado.codDatacat}}-{{comprobantes.motivoDeTraslado.desDataCat}}</td>
+                    <td style="width:10%">{{comprobantes.numRucDestinatario}}</td>
+                    <td style="width:20%">{{comprobantes.desRazonSocialDestinatario}}</td>
+                    <td style="width:15%">{{comprobantes.ubigeoDestino.nomDepartamento}}-{{comprobantes.ubigeoDestino.nomDistrito}}-{{comprobantes.ubigeoDestino.nomProvincia}}</td>
                   
                 </tr>
             </ng-template>
@@ -323,10 +323,10 @@
                     <!--<td>{{seriesDeclaracionDpmn.aduanaDam.codDatacat}}-{{seriesDeclaracionDpmn.regimenDam.codDatacat}}-
                       {{seriesDeclaracionDpmn.annDam}}-{{seriesDeclaracionDpmn.numDam}}</td>-->
                     <td style="width:10%">{{seriesDeclaracionDpmn.dam}}</td>
-                    <td style="width:5%">{{seriesDeclaracionDpmn.numSerie}}</td>
-                    <td style="width:10%">{{seriesDeclaracionDpmn.codSubPartida}}</td>
-                    <td style="width:15%" >{{seriesDeclaracionDpmn.desComercial}}</td>
-                    <td style="width:10%"style="text-align:right">{{seriesDeclaracionDpmn.mtoPesoBruto}}</td>
+                    <td style="width:5%" class="text-center" >{{seriesDeclaracionDpmn.numSerie}}</td>
+                    <td style="width:10%" class="text-center" >{{seriesDeclaracionDpmn.codSubPartida}}</td>
+                    <td style="width:15%" class="text-center" >{{seriesDeclaracionDpmn.desComercial}}</td>
+                   <td style="width:10%"style="text-align:right">{{seriesDeclaracionDpmn.mtoPesoBruto}}</td>
                     <td style="width:10%" style="text-align:right">{{seriesDeclaracionDpmn.mtoPesoNeto}}</td>
                     <td style="width:7%" style="text-align:right">{{seriesDeclaracionDpmn.cntUnidadFisica}}</td>
                     <td style="width:8%" style="text-align:right">{{seriesDeclaracionDpmn.cntRetirada}}</td>
