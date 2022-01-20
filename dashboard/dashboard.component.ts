@@ -362,6 +362,20 @@ export class DashboardComponent implements OnInit {
       .get<any>(this.URL_RESOURCE_PUESTO_CONTROL_CCMN + aduana).subscribe((res: any) => {
         this.lstPuestoControl = res;
         console.log(this.lstPuestoControl);
+        let datCatPtoControl : PuestoControl = new PuestoControl();
+        if(aduana=="019"){
+           datCatPtoControl.codigo = "0205";
+           datCatPtoControl.descripcion = "CEBAF Eje Vial 1";
+           this.lstPuestoControl.push(datCatPtoControl);
+        }else if(aduana=="181"){
+          datCatPtoControl.codigo = "0203";
+           datCatPtoControl.descripcion = "CEBAF Desaguadero";
+           this.lstPuestoControl.push(datCatPtoControl);
+        }else if(aduana=="172"){
+          datCatPtoControl.codigo = "0204";
+           datCatPtoControl.descripcion = "CAF Santa Rosa";
+           this.lstPuestoControl.push(datCatPtoControl);
+        }
       }, error => {
         console.log({ error });
       })
