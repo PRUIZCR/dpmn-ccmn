@@ -27,8 +27,7 @@ export class DetalleComponent implements OnInit {
    private URL_RESOURCE_DATOS_DECLARACION_CCMN : string = environment.urlBaseIntranet + ConstantesApp.RESOURCE_DATOS_DECLARACION_CCMN;
   private URL_RESOURCE_ARCHIVOS_ADJUNTOS_CCMN : string = environment.urlBaseIntranet + ConstantesApp.RESOURCE_ARCHIVOS_ADJUNTOS_CCMN;
   private URL_RESOURCE_ARCHIVOS_ADJUNTOS_DPMN : string = environment.urlBaseIntranet + ConstantesApp.RESOURCE_ARCHIVOS_ADJUNTOS_DPMN;
-  private URL_RESOURCE_ARCHIVOS_ADJUNTOS_ECM_CCMN : string = environment.urlBaseIntranet + ConstantesApp.RESOURCE_ARCHIVOS_ADJUNTOS_ECM_CCMN;
-  private URL_RESOURCE_ARCHIVOS_ADJUNTOS_ECM_DPMN : string = environment.urlBaseIntranet + ConstantesApp.RESOURCE_ARCHIVOS_ADJUNTOS_ECM_DPMN;
+
 
   aduanaDescarga:string;
   puestoControlDescarga:string;
@@ -221,7 +220,6 @@ export class DetalleComponent implements OnInit {
     if(data.empresaTransporte.nomPlaca!= null){
     this.nomPlaca=data.empresaTransporte.nomPlaca;
     }
-   
     let errorPPC = data.empresaTransporte.paisPlacaCarreta;
     if (errorPPC != null) {
         this.paisplacaCarreta=data.empresaTransporte.paisPlacaCarreta.codDatacat+ ' - '+ data.empresaTransporte.paisPlacaCarreta.desDataCat;
@@ -233,7 +231,6 @@ export class DetalleComponent implements OnInit {
     if(data.empresaTransporte.valEmail!= null){
       this.valEmail=data.empresaTransporte.valEmail;
     }
-
     if(data.empresaTransporte.numTelefono!= null){
     this.numTelefono=data.empresaTransporte.numTelefono;
     }
@@ -305,12 +302,12 @@ export class DetalleComponent implements OnInit {
   downloadPDFExcelCcmnDpmn(idECM: string,nomArch:string): void{
     if(this.numeroTipoDocum=="1"){
     console.log('codArchivoEcm: '+ idECM);
-    this.http.get(this.URL_RESOURCE_ARCHIVOS_ADJUNTOS_ECM_CCMN+idECM,{responseType: 'blob'}) 
+    this.http.get(this.URL_RESOURCE_ARCHIVOS_ADJUNTOS_CCMN+idECM,{responseType: 'blob'}) 
     .subscribe(Blob=>{ console.log('adjunto data adjun:'+Blob), saveAs(Blob, nomArch);
     }) ;
     }else{
       console.log('codArchivoEcm: '+ idECM);
-      this.http.get(this.URL_RESOURCE_ARCHIVOS_ADJUNTOS_ECM_DPMN+idECM,{responseType: 'blob'}) 
+      this.http.get(this.URL_RESOURCE_ARCHIVOS_ADJUNTOS_DPMN+idECM,{responseType: 'blob'}) 
       .subscribe(Blob=>{ console.log('adjunto data adjun:'+Blob), saveAs(Blob, nomArch);
       }) ;  
     }

@@ -11,7 +11,7 @@
 <br>
 <div class="card border-primary mb-3" style="max-width: 100%;">
 <div class="card-header bg-primary" style="background-color: #4683df;">
-  <div class="p-2 flex-grow-1 bd-highlight " style="color: white; font-weight:bold" >Consulta de {{urlConsultaDetalleTitulo }} NÂ° {{numeroDeDocumentoDescarga}} </div>
+  <div class="p-2 flex-grow-1 bd-highlight " style="color: white; font-weight:bold" >Consulta de {{urlConsultaDetalleTitulo }} N° {{numeroDeDocumentoDescarga}} </div>
 </div>
 <div class="card-body text-primary"  style="border-color: #4683df;">
   <p-accordion [multiple]="true">
@@ -61,14 +61,14 @@
                       </div>
                     </div>
                     <div class="row mb-3" *ngIf="numeroTipoDocum=='2'">
-                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">PaÃ­s Empresa:</label>
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">País Empresa:</label>
                       <div class="col-sm-4 col-form-label col-form-label-sm">
                         <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder="" 
                         [(ngModel)]="paisEmpresa" disabled>
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">IdentificaciÃ³n:</label>
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Identificación:</label>
                       <div class="col-sm-4">
                         <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder=""
                         [(ngModel)]="tipoIdentificacion" disabled>
@@ -86,14 +86,14 @@
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Flujo de VehÃ­culo:</label>
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Flujo de Vehículo:</label>
                       <div class="col-sm-4 col-form-label col-form-label-sm">
                         <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder=""
                         [(ngModel)]="flujoVehiculo"  disabled>
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">PaÃ­s Placa:</label>
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">País Placa:</label>
                       <div class="col-sm-4 col-form-label col-form-label-sm">
                         <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder="" 
                         [(ngModel)]="paisPlaca" disabled>
@@ -105,7 +105,7 @@
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">PaÃ­s Placa carreta:</label>
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">País Placa carreta:</label>
                       <div class="col-sm-4 col-form-label col-form-label-sm">
                         <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder=""
                         [(ngModel)]="paisplacaCarreta" disabled>
@@ -117,14 +117,14 @@
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Correo electrÃ³nico:</label>
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Correo electrónico:</label>
                       <div class="col-sm-9 col-form-label col-form-label-sm">
                         <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder=""
                         [(ngModel)]="valEmail" disabled>
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">NÃºmero Telefonico:</label>
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Número Telefonico:</label>
                       <div class="col-sm-9 col-form-label col-form-label-sm">
                         <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder="" 
                         [(ngModel)]="numTelefono" disabled>
@@ -148,7 +148,7 @@
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">IdentificaciÃ³n:</label>
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Identificación:</label>
                       <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Tipo de documento:</label>
                     </div>
                     <div class="row mb-3">
@@ -241,7 +241,7 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th style="width:5%">ID</th>
-                    <th style="width:15%" *ngIf="tipoOrigen=='IT' else noFAguiaremitente">GuÃ­a remitente / Comprobante pago</th>
+                    <th style="width:15%" *ngIf="tipoOrigen=='IT' else noFAguiaremitente">Guía remitente / Comprobante pago</th>
                     <ng-template #noFAguiaremitente>
                       <th style="width:15%" *ngIf="codFlujoVehiculo=='01' else noFAflujoVehiculo">Gu&iacute;a Remisi&oacute;n del Remitente /Carta Porte</th>
                     </ng-template>
@@ -268,7 +268,13 @@
             <ng-template pTemplate="body" let-comprobantes let-rowIndex="rowIndex">
                 <tr>
                     <td style="width:5%">{{rowIndex + 1}}</td>
-                    <td style="width:5%">{{comprobantes.numGuia}} - {{comprobantes.numSerie}}</td>
+                    <td style="width:5%" *ngIf="tipoOrigen=='IT' else FAguiaremitente">{{comprobantes.numGuia}} - {{comprobantes.numSerie}}</td>
+                    <ng-template #FAguiaremitente>
+                      <td #FAguiaremitente *ngIf="codFlujoVehiculo=='04' else FAflujoGuia">{{comprobantes.numSerie}}-{{comprobantes.numGuia}}</td>
+                    </ng-template>
+                    <ng-template #FAflujoGuia>
+                      <td>{{comprobantes.numGuia}} - {{comprobantes.numSerie}}</td>
+                    </ng-template>
                     <td style="width:15%">{{guiaCarta(comprobantes)}}</td>
                     <td style="width:15%"  *ngIf="tipoOrigen=='IT'">{{guiaCartaDesc(comprobantes)}}</td>
                     <td style="width:15%">{{comprobantes.motivoDeTraslado.codDatacat}}-{{comprobantes.motivoDeTraslado.desDataCat}}</td>
@@ -282,7 +288,7 @@
         </div>
       </fieldset>
     </p-accordionTab>
-    <p-accordionTab header="Datos de la Declaraci&oacute;n de ImportaciÃ³n">
+    <p-accordionTab header="Datos de la Declaraci&oacute;n de Importaci&oacute;n">
       <fieldset class="form-group scheduler-border" >
         <!--<legend class="scheduler-border">Datos de la Declaraci&oacute;n </legend>-->
         <div class="row">
