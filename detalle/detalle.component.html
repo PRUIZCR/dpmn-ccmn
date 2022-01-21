@@ -86,14 +86,14 @@
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Flujo de Vehículo:</label>
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Flujo de Veh&iacute;culo:</label>
                       <div class="col-sm-4 col-form-label col-form-label-sm">
                         <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder=""
                         [(ngModel)]="flujoVehiculo"  disabled>
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">País Placa:</label>
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Pa&iacute;s Placa:</label>
                       <div class="col-sm-4 col-form-label col-form-label-sm">
                         <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder="" 
                         [(ngModel)]="paisPlaca" disabled>
@@ -105,7 +105,7 @@
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">País Placa carreta:</label>
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Pa&iacute;s Placa carreta:</label>
                       <div class="col-sm-4 col-form-label col-form-label-sm">
                         <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder=""
                         [(ngModel)]="paisplacaCarreta" disabled>
@@ -117,14 +117,14 @@
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Correo electrónico:</label>
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Correo electr&oacute;nico:</label>
                       <div class="col-sm-9 col-form-label col-form-label-sm">
                         <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder=""
                         [(ngModel)]="valEmail" disabled>
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Número Telefonico:</label>
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">N&uacute;mero Telefonico:</label>
                       <div class="col-sm-9 col-form-label col-form-label-sm">
                         <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder="" 
                         [(ngModel)]="numTelefono" disabled>
@@ -148,7 +148,7 @@
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Identificación:</label>
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Identificaci&oacute;n:</label>
                       <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Tipo de documento:</label>
                     </div>
                     <div class="row mb-3">
@@ -241,11 +241,14 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th style="width:5%">ID</th>
-                    <th style="width:15%" *ngIf="tipoOrigen=='IT' else noFAguiaremitente">Guía remitente / Comprobante pago</th>
+                    <th style="width:15%" *ngIf="tipoOrigen=='IT' else noFAguiaremitente">Gu&iacute;a remitente / Comprobante pago</th>
                     <ng-template #noFAguiaremitente>
-                      <th style="width:15%" *ngIf="codFlujoVehiculo=='01' else noFAflujoVehiculo">Gu&iacute;a Remisi&oacute;n del Remitente /Carta Porte</th>
+                      <th style="width:15%" *ngIf="codFlujoVehiculo=='01' else FAflujoVehiculo1">Gu&iacute;a Remisi&oacute;n del Remitente /Carta Porte</th>
                     </ng-template>
-                    <ng-template #noFAflujoVehiculo>
+                    <ng-template #FAflujoVehiculo1>
+                      <th style="width:15%" *ngIf="codFlujoVehiculo=='04' else FAflujoVehiculo">Gu&iacute;a Remisi&oacute;n del Remitente /Carta Porte</th>
+                    </ng-template>
+                    <ng-template #FAflujoVehiculo>
                       <th style="width:15%">Gu&iacute;a Remisi&oacute;n del Remitente / Factura o Boleta</th>
                     </ng-template>
                     <th style="width:15%" *ngIf="tipoOrigen=='IT' else noFAruc">RUC Remitente / Carta Porte</th>
