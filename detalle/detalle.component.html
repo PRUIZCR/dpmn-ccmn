@@ -61,14 +61,14 @@
                       </div>
                     </div>
                     <div class="row mb-3" *ngIf="numeroTipoDocum=='2'">
-                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">País Empresa:</label>
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Pa&iacute;s Empresa:</label>
                       <div class="col-sm-4 col-form-label col-form-label-sm">
                         <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder="" 
                         [(ngModel)]="paisEmpresa" disabled>
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Identificación:</label>
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Identificaci&oacute;n:</label>
                       <div class="col-sm-4">
                         <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder=""
                         [(ngModel)]="tipoIdentificacion" disabled>
@@ -243,12 +243,12 @@
                     <th style="width:5%">ID</th>
                     <th style="width:15%" *ngIf="tipoOrigen=='IT' else noFAguiaremitente">Gu&iacute;a remitente / Comprobante pago</th>
                     <ng-template #noFAguiaremitente>
-                      <th style="width:15%" *ngIf="codFlujoVehiculo=='01' else FAflujoVehiculo1">Gu&iacute;a Remisi&oacute;n del Remitente /Carta Porte</th>
+                      <th style="width:15%" *ngIf="codTipoComprobante=='01' else FAtipoComprobante1">Gu&iacute;a Remisi&oacute;n del Remitente /Carta Porte</th>
                     </ng-template>
-                    <ng-template #FAflujoVehiculo1>
-                      <th style="width:15%" *ngIf="codFlujoVehiculo=='04' else FAflujoVehiculo">Gu&iacute;a Remisi&oacute;n del Remitente /Carta Porte</th>
+                    <ng-template #FAtipoComprobante1>
+                      <th style="width:15%" *ngIf="codTipoComprobante=='02' else FAtipoComprobante">Gu&iacute;a Remisi&oacute;n del Remitente /Carta Porte</th>
                     </ng-template>
-                    <ng-template #FAflujoVehiculo>
+                    <ng-template #FAtipoComprobante>
                       <th style="width:15%">Gu&iacute;a Remisi&oacute;n del Remitente / Factura o Boleta</th>
                     </ng-template>
                     <th style="width:15%" *ngIf="tipoOrigen=='IT' else noFAruc">RUC Remitente / Carta Porte</th>
@@ -273,12 +273,9 @@
                     <td style="width:5%">{{rowIndex + 1}}</td>
                     <td style="width:5%" *ngIf="tipoOrigen=='IT' else FAguiaremitente">{{comprobantes.numGuia}} - {{comprobantes.numSerie}}</td>
                     <ng-template #FAguiaremitente>
-                      <td #FAguiaremitente *ngIf="codFlujoVehiculo=='04' else FAflujoGuia">{{comprobantes.numSerie}}-{{comprobantes.numGuia}}</td>
+                      <td >{{valTipoComprobante(comprobantes)}}</td>
                     </ng-template>
-                    <ng-template #FAflujoGuia>
-                      <td>{{comprobantes.numGuia}} - {{comprobantes.numSerie}}</td>
-                    </ng-template>
-                    <td style="width:15%">{{guiaCarta(comprobantes)}}</td>
+                    <td style="width:15%">{{comprobantes.numRucRemitente}}</td>
                     <td style="width:15%"  *ngIf="tipoOrigen=='IT'">{{guiaCartaDesc(comprobantes)}}</td>
                     <td style="width:15%">{{comprobantes.motivoDeTraslado.codDatacat}}-{{comprobantes.motivoDeTraslado.desDataCat}}</td>
                     <td style="width:15%">{{comprobantes.numRucDestinatario}}</td>

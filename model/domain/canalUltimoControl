@@ -1,0 +1,5 @@
+import { DataCatalogo } from "../common/data-catalogo.model";
+export interface canalUltimoControl {
+    codDatacat: DataCatalogo;
+    desDataCat: string;
+}
