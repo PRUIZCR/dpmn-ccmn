@@ -380,13 +380,13 @@ export class DashboardComponent implements OnInit {
         console.log({ error });
       })
   }
-    cargarAduanaPuno(aduanaFuncionario:string){
+  cargarAduanaPuno(aduanaFuncionario:string){
       if(aduanaFuncionario=="181"){
         this.aduanaFuncionario="262";
       }else{
         this.aduanaFuncionario=aduanaFuncionario;
       }
-    }
+  }
     cargarAduanaFuncionario(nroRegistro:string){
       //this.ubicacionFuncionarioService.buscar(nroRegistro).subscribe( (ubicacion: UbicacionFuncionario) => {
       //this.cargarControlesPaso(ubicacion.puestoControl);
@@ -599,7 +599,11 @@ buscarRUC(tipo: string) {
   }
 
   limpiar(){
+    if(this.tipoOrigen = "IA"){
     this.maxLengthNumDoc = 10;
+    } else{
+      this.maxLengthNumDoc = 6;
+    }
     this.consultaForm = this.formBuilder.group({
       codEmprTrans: [''],
       tipoDocumento: [{ value: '1', disabled: false}, Validators.required],
