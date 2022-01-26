@@ -336,7 +336,18 @@ export class DetalleComponent implements OnInit {
       }
     return guiacartadescri;
 }
-
+valTipoComprobante(data: ComprobantePago): string{
+  let tipoComprobantedesc = ' ';
+  const tipoCom=data.tipoComprobante.codDatacat;
+  if (tipoCom== "01") {
+    tipoComprobantedesc=data.numSerie + '-'+ data.numGuia;
+    }else if (tipoCom== "02") {
+      tipoComprobantedesc =data.numCartaPorte;
+    }else{
+      tipoComprobantedesc =data.numComprobante;
+    }
+  return tipoComprobantedesc;
+}
 retornar(){
   this.router.navigate(['/condpmn/lista', this.numeroTipoDocum])
 }
