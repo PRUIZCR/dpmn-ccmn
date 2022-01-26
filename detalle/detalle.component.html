@@ -241,7 +241,7 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th style="width:5%">ID</th>
-                    <th style="width:15%" *ngIf="tipoOrigen=='IT' else noFAguiaremitente">Gu&iacute;a remitente / Comprobante pago</th>
+                    <th style="width:15%" *ngIf="tipoOrigen=='IT' else noFAguiaremitente">Gu&iacute;a Remitente / Comprobante pago</th>
                     <ng-template #noFAguiaremitente>
                       <th style="width:15%" *ngIf="codTipoComprobante=='01' else FAtipoComprobante1">Gu&iacute;a Remisi&oacute;n del Remitente /Carta Porte</th>
                     </ng-template>
@@ -280,8 +280,10 @@
                     <td style="width:15%">{{comprobantes.motivoDeTraslado.codDatacat}}-{{comprobantes.motivoDeTraslado.desDataCat}}</td>
                     <td style="width:15%">{{comprobantes.numRucDestinatario}}</td>
                     <td style="width:15%">{{comprobantes.desRazonSocialDestinatario}}</td>
-                    <td style="width:15%">{{comprobantes.ubigeoDestino.nomDepartamento}}-{{comprobantes.ubigeoDestino.nomDistrito}}-{{comprobantes.ubigeoDestino.nomProvincia}}</td>
-                  
+                    <td style="width:15%"  *ngIf="tipoOrigen=='IT' else FADestino">{{comprobantes.ubigeoDestino.nomDepartamento}}-{{comprobantes.ubigeoDestino.nomDistrito}}-{{comprobantes.ubigeoDestino.nomProvincia}}</td>
+                    <ng-template #FADestino>
+                      <td style="width:15%" >{{comprobantes.ubigeoDestino.nomDistrito}}-{{comprobantes.ubigeoDestino.nomProvincia}}-{{comprobantes.ubigeoDestino.nomDepartamento}}</td>
+                    </ng-template>
                 </tr>
             </ng-template>
           </p-table>
@@ -307,12 +309,18 @@
                     <th style="width:10%" class="text-center">DAM/DSI</th>
                     <th style="width:5%" class="text-center">Serie</th>
                     <th style="width:10%" class="text-center">Sub Partida</th>
-                    <th style="width:15%" class="text-center">Descripci&oacute;n Comercial</th>
-                    <th style="width:5%" class="text-right" >Peso Bruto</th>
-                    <th style="width:5%" class="text-right" >Peso Neto</th>
-                    <th style="width:10%" class="text-center" >Cantidad Declarada (UF)</th>
-                    <th style="width:10%" class="text-center" >Cantidad Retirada (UF)</th>
-                    <th style="width:10%" class="text-center" *ngIf="numeroTipoDocum=='1'">Secuencia de descarga</th>
+                    <th style="width:15%" class="text-center" *ngIf="numeroTipoDocum=='1' else  DPMNDesComercial">Descripci&oacute;n Comercial</th>
+                    <ng-template #DPMNDesComercial>
+                      <th style="width:10%">Peso Bruto</th>
+                    </ng-template>
+                    <th style="width:10%" class="text-center" *ngIf="numeroTipoDocum=='1' else  DPMNPesoBruto"  >Peso Bruto</th>
+                    <ng-template #DPMNPesoBruto>
+                      <th style="width:5%">Peso Bruto</th>
+                    </ng-template>
+                    <th style="width:10%" class="text-center" >Peso Neto</th>
+                    <th style="width:7%" class="text-center" >Cantidad Declarada (UF)</th>
+                    <th style="width:8%" class="text-center" >Cantidad Retirada (UF)</th>
+                    <th style="width:5%" class="text-center" *ngIf="numeroTipoDocum=='1'">Secuencia de descarga</th>
                     <th style="width:10%" class="text-center" *ngIf="numeroTipoDocum=='1'">Saldo</th>
                     <th style="width:5%" class="text-center" >Unidad F&iacute;sica</th>
 
