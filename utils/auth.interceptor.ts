@@ -34,7 +34,7 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
   private handleAuthError(err: HttpErrorResponse): Observable<any> {
-
+    console.log('err.status:' +err.status);
     if (err.status === 401 || err.status === 0) {
         this.ref = this.dialogService.open(MensajeModalComponent,
           {
