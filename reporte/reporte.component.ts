@@ -18,6 +18,12 @@ import { totalesFuncionarioAduanero } from '../../model/domain/totalesFuncionari
 import { ConsultaDpmnService } from 'src/app/services/consulta.dpmn';
 import { ConsultaCcmnService } from 'src/app/services/consulta.ccmn';
 
+import {from} from 'rxjs';
+import { filter } from 'rxjs/operator/filter';
+import { reduce } from 'rxjs/operator/reduce';
+import {map} from 'rxjs/operator/map';
+import { UniqueSelectionDispatcher } from '@angular/cdk/collections';
+
 @Component({
   selector: 'app-reporte',
   templateUrl: './reporte.component.html',
@@ -116,11 +122,117 @@ export class ReporteComponent implements OnInit {
     this.totalesAduana=data.totalesPorAduana;
     console.log('Totaladuana' + this.totalesAduana);
     this.totalesPorAduanasDocum=data.totalPorAduana;
+    this.sumaTotalFunction(this.totalesAduana);
+    }
+   sumaTotalFunction(data2:totalesAduanas[]):void{
+     const tempArray=[...data2].sort();
+     console.log(JSON.stringify(tempArray))
+     var listaAduanas: any[] = [];
+  const unicos: (string | totalesAduanas)[]=[];
+      for (var i=0; i < data2.length; i++) {
+        let esduplicado019,esduplicado181,esduplicado172,esduplicado262=false;
+        let cant172=0;
+        let cant262=0;
+        let cant181=0;
+        let cant019=0;
+          if (this.totalesAduana[i].concepto.codDatacat == "019"){       
+             if(!listaAduanas.includes("019")){ 
+              listaAduanas.push("019");    
+             }else{
+              cant019=this.totalesAduana[i].cantidad;
+              this.lstAduanaEliminada=this.totalesAduana[i];
+              esduplicado019=true;
+             }
+           }
+          if (this.totalesAduana[i].concepto.codDatacat == "181"){
+           if(!listaAduanas.includes("181")){ 
+            listaAduanas.push("181");
+           }else{
+            cant181=this.totalesAduana[i].cantidad;
+            esduplicado181=true;
+           }
+         }
+         if (this.totalesAduana[i].concepto.codDatacat == "172"){
+           if(!listaAduanas.includes("172")){ 
+            listaAduanas.push("172");
+           }else{
+            cant172=this.totalesAduana[i].cantidad;
+            esduplicado172=true;
+           }
+         }
+         if (this.totalesAduana[i].concepto.codDatacat == "262"){
+           if(!listaAduanas.includes("262")){ 
+            listaAduanas.push("262");
+           }else{
+            cant262=this.totalesAduana[i].cantidad;
+            esduplicado262=true;
+           }
+         }
+         if(esduplicado019||esduplicado172||esduplicado262||esduplicado181){
+          this.totalesAduana.splice(i,1);
+          this.totalesAduana.forEach(function(item){
+            if (item.concepto.codDatacat == "019"){   
+                 item.cantidad+=cant019;
+            }
+            if (item.concepto.codDatacat == "181"){   
+              item.cantidad+=cant181;
+             }
+             if (item.concepto.codDatacat == "172"){   
+              item.cantidad+=cant172;
+             }
+             if (item.concepto.codDatacat == "262"){   
+              item.cantidad+=cant262;
+             }
+          })
+         }
+        
+     console.log('list listaAduanas: ' + this.totalesAduana);
+    };
   }
   cargandoTotalesEstado(data: reporteresumido){
     this.totalesEstado=data.totalesPorEstado;
     console.log('TotalEstado' + data.totalPorEstado);
     this.totalesPorEstadoDocum=data.totalPorEstado;
+    this.sumaTotalFunctionEstado(this.totalesAduana);
+  }
+  sumaTotalFunctionEstado(data2:totalesAduanas[]):void{
+    for (var i=0; i < data2.length; i++) {
+      var listaAduanas: any[] = [];
+      let esduplicadoFisico,esduplicadoDoc=false;
+      let cantFisico=0;
+      let cantDoc=0;
+      if (this.totalesAduana[i].concepto.codDatacat == "F"){       
+        if(!listaAduanas.includes("F")){ 
+         listaAduanas.push("F");    
+        }else{
+          cantFisico=this.totalesAduana[i].cantidad;
+         this.lstAduanaEliminada=this.totalesAduana[i];
+         esduplicadoFisico=true;
+        }
+      }
+     if (this.totalesAduana[i].concepto.codDatacat == "D"){
+      if(!listaAduanas.includes("D")){ 
+       listaAduanas.push("D");
+      }else{
+        cantDoc=this.totalesAduana[i].cantidad;
+       esduplicadoDoc=true;
+      }
+    }
+
+    if(esduplicadoDoc||esduplicadoFisico){
+      this.totalesAduana.splice(i,1);
+      this.totalesAduana.forEach(function(item){
+        if (item.concepto.codDatacat == "F"){   
+             item.cantidad+=cantFisico;
+        }
+        if (item.concepto.codDatacat == "D"){   
+          item.cantidad+=cantDoc;
+         }
+      })
+     }
+
+
+    }
   }
   cargandoTotalesTipoControl(data: reporteresumido){
     this.totalesTipoControl=data.totalesPorTipoControl;

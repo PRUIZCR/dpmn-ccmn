@@ -174,6 +174,9 @@ export class DashboardComponent implements OnInit {
       paramConsulta.indicadorConsultaFuncionario=false;  
     }
     paramConsulta.codAduanaFuncionario=this.aduanaFuncionario;
+    if(this.aduanaFuncionario=="262"){
+      paramConsulta.codAduanaFuncionario="181";
+    }
 
     var fechaInicio = this.datePipe.transform(this.consultaForm.controls.fechaInicio.value,"dd/MM/yyyy") as string;
     var fechaFin = this.datePipe.transform(this.consultaForm.controls.fechaFin.value,"dd/MM/yyyy") as string;
