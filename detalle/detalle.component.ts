@@ -38,6 +38,7 @@ export class DetalleComponent implements OnInit {
   desIdentificacion:string;
   nomEmpresa:string;
   flujoVehiculo:string;
+  codTipoComprobante:string;
   codFlujoVehiculo:string;
   paisPlaca:string;
   nomPlaca:string;
@@ -68,6 +69,7 @@ export class DetalleComponent implements OnInit {
   respuestaData: any;
   rowsTblComprobante : RowTblCompago[] = new Array();
   urlConsultaDetalleTitulo="";
+  urlConsultaTitulocomprobante="";
   localEmpresaTransporte = [];
   constructor(private documentodescargaService:DocumentodescargaService,
     private router:Router,private http: HttpClient,
@@ -172,9 +174,11 @@ export class DetalleComponent implements OnInit {
     var urlConsultaDetalle=this.URL_RESOURCE_DATOS_DECLARACION;
     const params=new HttpParams().set('anulado',true);
     if(numeroTipoDocum=="1"){
-         urlConsultaDetalle=this.URL_RESOURCE_DATOS_DECLARACION_CCMN;
+         urlConsultaDetalle=this.URL_RESOURCE_DATOS_DECLARACION_CCMN_LOCALHOST;
+         this.urlConsultaTitulocomprobante="Datos del Comprobante de Pago";
     }else{
-       urlConsultaDetalle=this.URL_RESOURCE_DATOS_DECLARACION;
+       urlConsultaDetalle=this.URL_RESOURCE_DATOS_DECLARACION_LOCALHOST;
+       this.urlConsultaTitulocomprobante="Datos del Comprobante de Pago/Carta Porte";
   }
       console.log('url detalle: ' +urlConsultaDetalle)
     return this.http.get<DocumentoDpmn>(urlConsultaDetalle+numCorrelativoOk,{params}) 
@@ -240,22 +244,22 @@ export class DetalleComponent implements OnInit {
   }
 
   cargandoconductor(data: DocumentoDpmn){
-    if(data.conductor.pais!= null){
-    this.nacionalidad=data.conductor.pais.codDatacat+' - '+ data.conductor.pais.desDataCat;
+    if(data.conductor?.pais!= null){
+      this.nacionalidad=data.conductor?.pais?.codDatacat+' - '+ data.conductor?.pais?.desDataCat;
     }
-    if(data.conductor.tipoDocIdentidad!= null){
+    if(data.conductor?.tipoDocIdentidad!= null){
     this.tipoDocumentoConductor=data.conductor.tipoDocIdentidad.codDatacat+' - '+data.conductor.tipoDocIdentidad.desDataCat;
     }
-    if(data.conductor.numDocIdentidad!= null){
+    if(data.conductor?.numDocIdentidad!= null){
     this.numDocIdentidad=data.conductor.numDocIdentidad;
     }
-    if(data.conductor.nomConductor!= null){
+    if(data.conductor?.nomConductor!= null){
     this.nomConductor=data.conductor.nomConductor;
     }
-    if(data.conductor.apeConductor!= null){
+    if(data.conductor?.apeConductor!= null){
     this.apeConductor=data.conductor.apeConductor;
     }
-    if(data.conductor.numLicencia!= null){
+    if(data.conductor?.numLicencia!= null){
     this.numLicencia=data.conductor.numLicencia;
   }
 
@@ -273,6 +277,21 @@ export class DetalleComponent implements OnInit {
   }
   cargandoDatosComprobante(data: DocumentoDpmn){
     this.comprobantes=data.comprobantePago;
+    this.comprobantes.forEach(
+      (comprobantes2:any)=>{
+        this.codTipoComprobante=comprobantes2.tipoComprobante.codDatacat;
+      }
+    )
+
+    
+
+    this.seriesDeclaracionDpmn.forEach(
+      (documentos: any)=>{
+        documentos.dam = documentos.aduanaDam.codDatacat + "-" + documentos.annDam + "-" + documentos.regimenDam.codDatacat + "-" + ('000000' + documentos.numDam).slice(-6) ;
+        documentos.indEliminado=documentos.indEliminado;
+       }
+       );
+    this.codFlujoVehiculo=data.empresaTransporte.flujoVehiculo.codDatacat;
     //const result = this.comprobantes.find( ({ indEliminado }) => indEliminado === true );
     //console.log("los comprobantes no eliminados son:" + result);
   }
@@ -317,7 +336,6 @@ export class DetalleComponent implements OnInit {
   guiaCarta(data: ComprobantePago): string {
     let guiacarta = ' ';
     const tipoCom=data.tipoComprobante.codDatacat;
-    const control = data.numRucRemitente;
     if (tipoCom== "02") {
       guiacarta =data.numCartaPorte;
       }else{
@@ -328,9 +346,8 @@ export class DetalleComponent implements OnInit {
  guiaCartaDesc(data: ComprobantePago): string {
   let guiacartadescri = ' ';
   const tipoCom=data.tipoComprobante.codDatacat;
-    const control = data.numRucRemitente;
     if (tipoCom== "02") {
-      guiacartadescri =data.numCartaPorte;
+      guiacartadescri =data.desRazonSocialRemitente;
       }else{
         guiacartadescri =data.desRazonSocialRemitente;
       }
@@ -347,6 +364,22 @@ valTipoComprobante(data: ComprobantePago): string{
       tipoComprobantedesc =data.numComprobante;
     }
   return tipoComprobantedesc;
+}
+validarRucremitenteEmpresa(data: ComprobantePago): string{
+  let rucEmpresaComprobantedesc = ' ';
+  const tipoCom=data.tipoComprobante.codDatacat;
+  if (tipoCom== "01") {
+      rucEmpresaComprobantedesc=data.numRucRemitente;
+    }else if (tipoCom== "02") {
+      if(data.nomEmpresa!=null){
+      rucEmpresaComprobantedesc =data.nomEmpresa;
+      }else{
+        rucEmpresaComprobantedesc =data.numRucRemitente;
+      }
+    }else{
+      rucEmpresaComprobantedesc =data.numRucRemitente;
+    }
+  return rucEmpresaComprobantedesc;
 }
 retornar(){
   this.router.navigate(['/condpmn/lista', this.numeroTipoDocum])
