@@ -323,13 +323,16 @@
                     <th style="width:10%" class="text-center">Sub Partida</th>
                     <th style="width:10%" class="text-center" *ngIf="numeroTipoDocum=='1' else  DPMNDesComercial">Descripci&oacute;n Comercial</th>
                     <ng-template #DPMNDesComercial>
-                      <th style="width:15%" class="text-center">Descripci&oacute;n Comercial</th>
+                      <th style="width:20%" class="text-center">Descripci&oacute;n Comercial</th>
                     </ng-template>
                     <th style="width:5%" class="text-center" *ngIf="numeroTipoDocum=='1' else  DPMNPesoBruto"  >Peso Bruto</th>
                     <ng-template #DPMNPesoBruto>
-                      <th style="width:5%">Peso Bruto</th>
+                      <th style="width:3%">Peso Bruto</th>
                     </ng-template>
-                    <th style="width:5%" class="text-center" >Peso Neto</th>
+                    <th style="width:5%" class="text-center" *ngIf="numeroTipoDocum=='1' else  DPMNPesoNeto">Peso Neto</th>
+                    <ng-template #DPMNPesoNeto>
+                      <th style="width:3%">Peso Neto</th>
+                    </ng-template>
                     <th style="width:12%" class="text-center" *ngIf="numeroTipoDocum=='1' else  CantDecla">Cantidad Declarada (UF)</th>
                     <ng-template #CantDecla>
                     <th style="width:7%" class="text-center" >Cantidad Declarada (UF)</th>
