@@ -321,29 +321,29 @@
                     </ng-template>
                     <th style="width:10%" class="text-center">Serie</th>
                     <th style="width:10%" class="text-center">Sub Partida</th>
-                    <th style="width:10%" class="text-center" *ngIf="numeroTipoDocum=='1' else  DPMNDesComercial">Descripci&oacute;n Comercial</th>
+                    <th style="width:15%" class="text-center" *ngIf="numeroTipoDocum=='1' else  DPMNDesComercial">Descripci&oacute;n Comercial</th>
                     <ng-template #DPMNDesComercial>
-                      <th style="width:20%" class="text-center">Descripci&oacute;n Comercial</th>
+                      <th style="width:15%" class="text-center">Descripci&oacute;n Comercial</th>
                     </ng-template>
-                    <th style="width:5%" class="text-center" *ngIf="numeroTipoDocum=='1' else  DPMNPesoBruto"  >Peso Bruto</th>
+                    <th style="width:2%" class="text-center" *ngIf="numeroTipoDocum=='1' else  DPMNPesoBruto"  >Peso Bruto</th>
                     <ng-template #DPMNPesoBruto>
-                      <th style="width:3%">Peso Bruto</th>
+                      <th style="width:2%">Peso Bruto</th>
                     </ng-template>
-                    <th style="width:5%" class="text-center" *ngIf="numeroTipoDocum=='1' else  DPMNPesoNeto">Peso Neto</th>
+                    <th style="width:3%" class="text-center" *ngIf="numeroTipoDocum=='1' else  DPMNPesoNeto">Peso Neto</th>
                     <ng-template #DPMNPesoNeto>
                       <th style="width:3%">Peso Neto</th>
                     </ng-template>
-                    <th style="width:12%" class="text-center" *ngIf="numeroTipoDocum=='1' else  CantDecla">Cantidad Declarada (UF)</th>
+                    <th style="width:8%" class="text-center" *ngIf="numeroTipoDocum=='1' else  CantDecla">Cantidad Declarada (UF)</th>
                     <ng-template #CantDecla>
                     <th style="width:7%" class="text-center" >Cantidad Declarada (UF)</th>
                     </ng-template>
-                    <th style="width:13%" class="text-center" *ngIf="numeroTipoDocum=='1' else  CantReti">Cantidad Retirada (UF)</th>
+                    <th style="width:7%" class="text-center" *ngIf="numeroTipoDocum=='1' else  CantReti">Cantidad Retirada (UF)</th>
                     <ng-template #CantReti>
                     <th style="width:8%" class="text-center" >Cantidad Retirada (UF)</th>
                     </ng-template>
-                    <th style="width:10%" class="text-center" *ngIf="numeroTipoDocum=='1'">Secuencia de descarga</th>
-                    <th style="width:10%" class="text-center" *ngIf="numeroTipoDocum=='1'">Saldo</th>
-                    <th style="width:10%" class="text-center" >Unidad F&iacute;sica</th>
+                    <th style="width:5%" class="text-center" *ngIf="numeroTipoDocum=='1'">Secuencia de descarga</th>
+                    <th style="width:5%" class="text-center" *ngIf="numeroTipoDocum=='1'">Saldo</th>
+                    <th style="width:5%" class="text-center" >Unidad F&iacute;sica</th>
 
                 </tr>
             </ng-template>
