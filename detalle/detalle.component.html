@@ -278,9 +278,9 @@
             <ng-template pTemplate="body" let-comprobantes let-rowIndex="rowIndex">
                 <tr>
                     <td style="width:5%">{{rowIndex + 1}}</td>
-                    <td style="width:5%" *ngIf="tipoOrigen=='IT' else FAguiaremitente">{{comprobantes.numGuia}} - {{comprobantes.numSerie}}</td>
+                    <td style="width:5%" *ngIf="tipoOrigen=='IA' else FAguiaremitente">{{valTipoComprobante(comprobantes)}}</td>
                     <ng-template #FAguiaremitente>
-                      <td >{{valTipoComprobante(comprobantes)}}</td>
+                      <td >{{comprobantes.numGuia}} - {{comprobantes.numSerie}}</td>
                     </ng-template>
                     <td style="width:15%">{{validarRucremitenteEmpresa(comprobantes)}}</td>
                     <td style="width:15%" *ngIf="numeroTipoDocum=='2' else FARazonSocialDato">{{guiaCartaDesc(comprobantes)}}</td>

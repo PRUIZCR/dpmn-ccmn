@@ -275,14 +275,8 @@ export class DetalleComponent implements OnInit {
   }
      
   }
-  cargandoDatosComprobante(data: DocumentoDpmn){
-    this.comprobantes=data.comprobantePago;
-    this.comprobantes.forEach(
-      (comprobantes2:any)=>{
-        this.codTipoComprobante=comprobantes2.tipoComprobante.codDatacat;
-      }
-    )
-
+  cargandoDatosComprobante(data3: DocumentoDpmn){
+    this.comprobantes=data3.comprobantePago;
     
 
     this.seriesDeclaracionDpmn.forEach(
@@ -291,7 +285,7 @@ export class DetalleComponent implements OnInit {
         documentos.indEliminado=documentos.indEliminado;
        }
        );
-    this.codFlujoVehiculo=data.empresaTransporte.flujoVehiculo.codDatacat;
+    this.codFlujoVehiculo=data3.empresaTransporte.flujoVehiculo.codDatacat;
     //const result = this.comprobantes.find( ({ indEliminado }) => indEliminado === true );
     //console.log("los comprobantes no eliminados son:" + result);
   }
@@ -361,7 +355,7 @@ valTipoComprobante(data: ComprobantePago): string{
     }else if (tipoCom== "02") {
       tipoComprobantedesc =data.numCartaPorte;
     }else{
-      tipoComprobantedesc =data.numComprobante;
+      tipoComprobantedesc =data.numSerie + '-' +data.numComprobante;
     }
   return tipoComprobantedesc;
 }
@@ -377,7 +371,7 @@ validarRucremitenteEmpresa(data: ComprobantePago): string{
         rucEmpresaComprobantedesc =data.numRucRemitente;
       }
     }else{
-      rucEmpresaComprobantedesc =data.numRucRemitente;
+      rucEmpresaComprobantedesc =data.numRuc;
     }
   return rucEmpresaComprobantedesc;
 }
