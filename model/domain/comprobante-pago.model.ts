@@ -15,5 +15,6 @@ export class ComprobantePago {
   indEliminado: boolean;
   numSerie: string;
   numGuia:string;
+  numRuc:string;
   numComprobante:string;
 }
