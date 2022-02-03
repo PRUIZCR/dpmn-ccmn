@@ -174,10 +174,10 @@ export class DetalleComponent implements OnInit {
     var urlConsultaDetalle=this.URL_RESOURCE_DATOS_DECLARACION;
     const params=new HttpParams().set('anulado',true);
     if(numeroTipoDocum=="1"){
-         urlConsultaDetalle=this.URL_RESOURCE_DATOS_DECLARACION_CCMN_LOCALHOST;
+         urlConsultaDetalle=this.URL_RESOURCE_DATOS_DECLARACION_CCMN;
          this.urlConsultaTitulocomprobante="Datos del Comprobante de Pago";
     }else{
-       urlConsultaDetalle=this.URL_RESOURCE_DATOS_DECLARACION_LOCALHOST;
+       urlConsultaDetalle=this.URL_RESOURCE_DATOS_DECLARACION;
        this.urlConsultaTitulocomprobante="Datos del Comprobante de Pago/Carta Porte";
   }
       console.log('url detalle: ' +urlConsultaDetalle)
