@@ -112,6 +112,9 @@ export class DashboardComponent implements OnInit {
     this.consultaForm.controls.numeroRucEmprTrans.setValue(this.numeroRUC);
     this.buscarRUC('1');
     this.cargarAduanaFuncionario(this.nroRegistro);
+    
+    this.consultaForm.controls.codAduanaDocumento.setValue(this.aduanaFuncionario);
+    this.consultaForm.controls.codAduanaDAM.setValue(this.aduanaFuncionario);
   }
 
   async consultar() {
@@ -387,7 +390,7 @@ export class DashboardComponent implements OnInit {
       })
   }
   cargarAduanaPuno(aduanaFuncionario:string){
-      if(aduanaFuncionario=="181"){
+      if(this.aduanaFuncionario=="181" ){
         //this.aduanaFuncionario="262";
         this.consultaForm.controls.codAduanaDAM.setValue('262');
         this.consultaForm.controls.codAduanaDocumento.setValue('181');
@@ -407,7 +410,10 @@ export class DashboardComponent implements OnInit {
       datCatPtoControl.descripcion = ubicacion?.puestoControl?.descripcion;
 
       arrPuestosControl.push(datCatPtoControl);
-
+      if(this.aduanaFuncionario== undefined || this.aduanaFuncionario==null || this.aduanaFuncionario.length == 0 ){
+        this.aduanaFuncionarioLogueo=ubicacion?.puestoControl?.aduana?.codigo;
+        console.log('aduanaFuncionarioLogueo:' +this.aduanaFuncionarioLogueo);
+       }
       this.rptaPuestoControl = Respuesta.create(arrPuestosControl, Estado.SUCCESS);
       let datCatAduanaDescarga : DataCatalogo = new DataCatalogo();
       if ( this.catalogoAduanasDescarga.length <= 0 ) { 
@@ -628,12 +634,12 @@ buscarRUC(tipo: string) {
       numPlaca: [''],
       numeroRucEmprTrans: [this.numeroRUC],
       tipoBusqueda: ['', [Validators.required]],
-      codAduanaDocumento: [{ value:this.aduanaFuncionario, disabled: true }],
+      codAduanaDocumento: [{ value:this.aduanaFuncionarioLogueo, disabled: true }],
       codPuestoControl: [{ value: '', disabled: true }],
       anoDocumento: [{ value: this.date.getFullYear(), disabled: true }],
       numeroDocumento: [{ value: '', disabled: true }],
       numeroRucRemitente: [''],
-      codAduanaDAM: [{ value: this.aduanaFuncionario, disabled: true }],
+      codAduanaDAM: [{ value: this.aduanaFuncionarioLogueo, disabled: true }],
       anoDAM: [{ value: this.date.getFullYear(), disabled: true }],
       codRegimen: [{ value: '10', disabled: true }],
       numeroDAM: [{ value: '', disabled: true }],
@@ -643,7 +649,7 @@ buscarRUC(tipo: string) {
       descRazonSocialRemitente: new FormControl()
     });
     this.buscarRUC('1');
-    this.cargarAduanaPuno(this.aduanaFuncionario);
+    this.cargarAduanaPuno(this.aduanaFuncionarioLogueo);
 
   }
 
