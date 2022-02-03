@@ -43,6 +43,7 @@ export class DashboardComponent implements OnInit {
   lstTipoControl: any;
   lstPaisVehiculo: any;
   lstAduanaDocumento: any;
+  lstAduanaDocumento2: any;
   lstPuestoControl: any;
   lstRegimen: any;
   lstEstados: any;
@@ -51,7 +52,8 @@ export class DashboardComponent implements OnInit {
   maxLengthNumDoc: number = 11;
   esVisible: boolean = false;
   esVisibleFuncAduan: boolean = true;
-  aduanaFuncionario:string
+  aduanaFuncionario:string;
+  aduanaFuncionarioLogueo:string;
   puestoControlFuncionario:string
   msgs: Message[] = [];
   numeroRUC : string;
@@ -85,6 +87,7 @@ export class DashboardComponent implements OnInit {
     this.getCatalogo('assets/json/aduanas.json', 4);
     this.getCatalogo('assets/json/regimen.json', 5);
     this.getCatalogo('assets/json/estadosccmn.json', 7)
+    this.getCatalogo('assets/json/aduanas262.json', 8)
 
     this.config.setTranslation({
       accept: 'Accept',
@@ -385,7 +388,9 @@ export class DashboardComponent implements OnInit {
   }
   cargarAduanaPuno(aduanaFuncionario:string){
       if(aduanaFuncionario=="181"){
-        this.aduanaFuncionario="262";
+        //this.aduanaFuncionario="262";
+        this.consultaForm.controls.codAduanaDAM.setValue('262');
+        this.consultaForm.controls.codAduanaDocumento.setValue('181');
       }else{
         this.aduanaFuncionario=aduanaFuncionario;
       }
@@ -437,6 +442,8 @@ export class DashboardComponent implements OnInit {
           this.lstEstados = data;
       } else if(tipojson == 7) {
         this.lstEstados = data;
+      } else if (tipojson == 8) {
+        this.lstAduanaDocumento2 = data;
         }
       }, error => {
         console.log({ error });
@@ -571,6 +578,11 @@ buscarRUC(tipo: string) {
     this.consultaForm.controls.numeroDAM.disable();
     this.consultaForm.controls.fechaInicio.disable();
     this.consultaForm.controls.fechaFin.disable();
+    //this.cargarAduanaFuncionario(this.nroRegistro);
+    if(this.aduanaFuncionario=="262"){
+    this.consultaForm.controls.codAduanaDAM.setValue(this.aduanaFuncionario);
+    }
+
     this.cargarPuestoControl(this.aduanaFuncionario);
   }
 
@@ -616,12 +628,12 @@ buscarRUC(tipo: string) {
       numPlaca: [''],
       numeroRucEmprTrans: [this.numeroRUC],
       tipoBusqueda: ['', [Validators.required]],
-      codAduanaDocumento: [{ value: '', disabled: true }],
+      codAduanaDocumento: [{ value:this.aduanaFuncionario, disabled: true }],
       codPuestoControl: [{ value: '', disabled: true }],
       anoDocumento: [{ value: this.date.getFullYear(), disabled: true }],
       numeroDocumento: [{ value: '', disabled: true }],
       numeroRucRemitente: [''],
-      codAduanaDAM: [{ value: '', disabled: true }],
+      codAduanaDAM: [{ value: this.aduanaFuncionario, disabled: true }],
       anoDAM: [{ value: this.date.getFullYear(), disabled: true }],
       codRegimen: [{ value: '10', disabled: true }],
       numeroDAM: [{ value: '', disabled: true }],
@@ -631,6 +643,7 @@ buscarRUC(tipo: string) {
       descRazonSocialRemitente: new FormControl()
     });
     this.buscarRUC('1');
+    this.cargarAduanaPuno(this.aduanaFuncionario);
 
   }
 
