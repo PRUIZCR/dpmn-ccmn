@@ -2,6 +2,7 @@ import { DataCatalogo } from "./data-catalogo.model";
 import { DatoComplementario } from "../domain/dato-complementario.model";
 import { EmpresaTransporte } from "../domain/empresa-transporte.model";
 import { Conductor } from "../domain/conductor.model";
+import { Responsable } from "../domain/responsable.model";
 import { ComprobantePago } from "../domain/comprobante-pago.model";
 import { Datacatalogo } from "../datacatalogo";
 export class DocumentoDpmn {
@@ -20,5 +21,6 @@ export class DocumentoDpmn {
     datoComplementario:    DatoComplementario;
     empresaTransporte:     EmpresaTransporte;
     conductor:             Conductor;
+    responsable:           Responsable;
     comprobantePago:       ComprobantePago[];
 }
