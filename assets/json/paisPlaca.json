@@ -1,11 +1,11 @@
 [
     {"codigo":"PE","descripcion":"PE-PERU"},
+    {"codigo":"EC","descripcion":"EC-ECUADOR", "aduana":"019", "orden":1},
+    {"codigo":"CO","descripcion":"CO-COLOMBIA", "aduana": "019", "orden":2},
     {"codigo":"AR","descripcion":"AR-ARGENTINA"},
     {"codigo":"BO","descripcion":"BO-BOLIVIA", "aduana": "181", "orden":1},
     {"codigo":"BR","descripcion":"BR-BRAZIL"},
-    {"codigo":"CO","descripcion":"CO-COLOMBIA", "aduana": "019", "orden":2},
     {"codigo":"CL","descripcion":"CL-CHILE", "aduana": "172", "orden":1},
-    {"codigo":"EC","descripcion":"EC-ECUADOR", "aduana":"019", "orden":1},  
     {"codigo":"PY","descripcion":"PY-PARAGUAY"},
     {"codigo":"UY","descripcion":"UY-URUGUAY"},
     {"codigo":"VE","descripcion":"VE-VENEZUELA"},
