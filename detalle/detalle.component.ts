@@ -217,6 +217,14 @@ export class DetalleComponent implements OnInit {
     if(data.empresaTransporte.flujoVehiculo!= null){
       this.flujoVehiculo=data.empresaTransporte.flujoVehiculo.codDatacat + ' - '+data.empresaTransporte.flujoVehiculo.desDataCat;
       this.codFlujoVehiculo=data.empresaTransporte.flujoVehiculo.codDatacat;
+      if(this.codFlujoVehiculo=="01"||this.codFlujoVehiculo=="02"){
+        this.tituloConductorResponsable="Conductor";
+        this.cargandoconductor(data);   
+      }else{
+        this.tituloConductorResponsable="Responsable";
+        this.cargandoresponsable(data);   
+      }
+      console.log('flujo de vehiculo: '+this.codFlujoVehiculo);
     }
     if(data.empresaTransporte.paisPlaca!= null){
     this.paisPlaca=data.empresaTransporte.paisPlaca.codDatacat + ' - '+ data.empresaTransporte.paisPlaca.desDataCat;
@@ -264,6 +272,31 @@ export class DetalleComponent implements OnInit {
   }
 
   }
+  cargandoresponsable(data: DocumentoDpmn){
+    if(data.responsable?.pais!= null){
+      this.nacionalidad=data.responsable?.pais?.codDatacat+' - '+ data.responsable?.pais?.desDataCat;
+    }
+    if(data.responsable?.tipoDocumentoRes!= null){
+      this.tipoDocumentoConductor=data.responsable.tipoDocumentoRes.codDatacat+' - '+data.responsable.tipoDocumentoRes.desDataCat;
+    
+      if(data.responsable?.numDocumentoRes!= null){
+        this.numDocIdentidad=data.responsable.numDocumentoRes;
+      }
+    }
+    if(data.responsable?.nomResponsable!= null){
+      this.nomConductor=data.responsable.nomResponsable;
+    }
+    if(data.responsable?.apeResponsable!= null){
+      this.apeConductor=data.responsable.apeResponsable;
+    }
+    if(data.responsable?.valEmail!= null){
+      this.valEmailres=data.responsable.valEmail;
+    }
+    if(data.responsable?.numTelefono!= null){
+      this.numTelefonores=data.responsable.numTelefono;
+    }
+    
+  }
 
   cargandoDatosComplementario(data: DocumentoDpmn){
     if(data.datoComplementario.desObservacion!= null){
@@ -285,7 +318,7 @@ export class DetalleComponent implements OnInit {
         documentos.indEliminado=documentos.indEliminado;
        }
        );
-    this.codFlujoVehiculo=data3.empresaTransporte.flujoVehiculo.codDatacat;
+    //this.codFlujoVehiculo=data3.empresaTransporte.flujoVehiculo.codDatacat;
     //const result = this.comprobantes.find( ({ indEliminado }) => indEliminado === true );
     //console.log("los comprobantes no eliminados son:" + result);
   }

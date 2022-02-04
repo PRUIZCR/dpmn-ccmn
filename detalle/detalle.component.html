@@ -137,7 +137,7 @@
         
             <div class="col-md-6">
               <p-fieldset class="form-group scheduler-border">
-                <ng-template pTemplate="header">Datos del Conductor</ng-template>
+                <ng-template pTemplate="header">Datos del {{tituloConductorResponsable}}</ng-template>
               
                 <div class="row">
                     <div class="row mb-3">
@@ -171,7 +171,7 @@
                     </div>
                   
                     <div class="row mb-3">
-                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Nombre Conductor:</label>
+                      <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Nombre {{tituloConductorResponsable}}:</label>
                       <div class="col-sm-9 col-form-label col-form-label-sm">
                         <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder="" 
                         [(ngModel)]="nomConductor" disabled>
@@ -187,10 +187,25 @@
                         [(ngModel)]="numLicencia"  disabled>
                       </div>
                     </div>
-                        <tr>
-                          <td></td>
-                          <td> &nbsp; </td>
-                        </tr>
+
+                     
+                        <div class="row mb-3"  >
+                          <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Correo El&eacute;ctronico:</label>
+                          <div class="col-sm-9 col-form-label col-form-label-sm">
+                            <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder=""
+                            [(ngModel)]="valEmailres"  disabled>
+                          </div>
+                        </div>
+              
+                  
+                        <div class="row mb-3" >
+                        <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">N&uacute;mero Telef&oacute;nico:</label>
+                        <div class="col-sm-9 col-form-label col-form-label-sm">
+                          <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder=""
+                          [(ngModel)]="numTelefonores"  disabled>
+                        </div>
+                      </div>
+                 
                         <tr>
                           <td></td>
                           <td> &nbsp; </td>
