@@ -42,6 +42,8 @@ export class DashboardComponent implements OnInit {
   lstTipoDocumento: any;
   lstTipoControl: any;
   lstPaisVehiculo: any;
+  lstPaisVehiculoPuno: any;
+  lstPaisVehiculoTacna: any;
   lstAduanaDocumento: any;
   lstAduanaDocumento2: any;
   lstPuestoControl: any;
@@ -51,9 +53,11 @@ export class DashboardComponent implements OnInit {
   date = new Date();
   maxLengthNumDoc: number = 11;
   esVisible: boolean = false;
+  cantPuestoControl:number;
   esVisibleFuncAduan: boolean = true;
   aduanaFuncionario:string;
   aduanaFuncionarioLogueo:string;
+  puestoControlFuncionarioLogueo:string;
   puestoControlFuncionario:string
   msgs: Message[] = [];
   numeroRUC : string;
@@ -88,6 +92,8 @@ export class DashboardComponent implements OnInit {
     this.getCatalogo('assets/json/regimen.json', 5);
     this.getCatalogo('assets/json/estadosccmn.json', 7)
     this.getCatalogo('assets/json/aduanas262.json', 8)
+    this.getCatalogo('assets/json/paisPlacaPuno.json', 9);
+    this.getCatalogo('assets/json/paisPlacaTacna.json', 10);
 
     this.config.setTranslation({
       accept: 'Accept',
@@ -364,14 +370,22 @@ export class DashboardComponent implements OnInit {
   /*Carga los puesto de control por aduana seleccionada*/
   cargarPuestoControl(aduanaFuncionario:string) {
     var aduana = this.consultaForm.controls.codAduanaDocumento.value;
-
-    //this.lstPaisVehiculo.splice(4, 1);
+    var codPuestoControlAdu = this.consultaForm.controls.codPuestoControl.value;
 
     this.http
       .get<any>(this.URL_RESOURCE_PUESTO_CONTROL_CCMN + aduana).subscribe((res: any) => {
         this.lstPuestoControl = res;
         console.log(this.lstPuestoControl);
         let datCatPtoControl : PuestoControl = new PuestoControl();
+
+        let busqPuesto = this.lstPuestoControl.filter((pto: { codigo: any; }) => pto.codigo== codPuestoControlAdu );
+        this.cantPuestoControl=busqPuesto.length;
+        if(busqPuesto==0){
+          this.consultaForm.controls.codPuestoControl.setValue('');
+        }else{
+          this.consultaForm.controls.codPuestoControl.setValue(codPuestoControlAdu);
+        }
+
         if(aduana=="019"){
            datCatPtoControl.codigo = "0205";
            datCatPtoControl.descripcion = "CEBAF Eje Vial 1";
@@ -388,6 +402,7 @@ export class DashboardComponent implements OnInit {
       }, error => {
         console.log({ error });
       })
+      this.consultaForm.controls.codAduanaDAM.setValue(this.aduanaFuncionarioLogueo);
   }
   cargarAduanaPuno(aduanaFuncionario:string){
       if(this.aduanaFuncionario=="181" ){
@@ -413,6 +428,7 @@ export class DashboardComponent implements OnInit {
       if(this.aduanaFuncionario== undefined || this.aduanaFuncionario==null || this.aduanaFuncionario.length == 0 ){
         this.aduanaFuncionarioLogueo=ubicacion?.puestoControl?.aduana?.codigo;
         console.log('aduanaFuncionarioLogueo:' +this.aduanaFuncionarioLogueo);
+        this.puestoControlFuncionarioLogueo=datCatPtoControl.codigo;
        }
       this.rptaPuestoControl = Respuesta.create(arrPuestosControl, Estado.SUCCESS);
       let datCatAduanaDescarga : DataCatalogo = new DataCatalogo();
@@ -450,6 +466,10 @@ export class DashboardComponent implements OnInit {
         this.lstEstados = data;
       } else if (tipojson == 8) {
         this.lstAduanaDocumento2 = data;
+      }else if (tipojson == 9) {
+        this.lstPaisVehiculoPuno = data;
+      }else if (tipojson == 10) {
+        this.lstPaisVehiculoTacna = data;
         }
       }, error => {
         console.log({ error });
@@ -586,7 +606,7 @@ buscarRUC(tipo: string) {
     this.consultaForm.controls.fechaFin.disable();
     //this.cargarAduanaFuncionario(this.nroRegistro);
     if(this.aduanaFuncionario=="262"){
-    this.consultaForm.controls.codAduanaDAM.setValue(this.aduanaFuncionario);
+    this.consultaForm.controls.codAduanaDAM.setValue(this.aduanaFuncionarioLogueo);
     }
 
     this.cargarPuestoControl(this.aduanaFuncionario);
