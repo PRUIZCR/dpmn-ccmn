@@ -140,7 +140,7 @@
                 <ng-template pTemplate="header">Datos del {{tituloConductorResponsable}}</ng-template>
               
                 <div class="row">
-                    <div class="row mb-3">
+                    <div class="row mb-3" *ngIf="codTipFlujoVehiculo ==1">
                       <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Nacionalidad:</label>
                       <div class="col-sm-9 col-form-label col-form-label-sm">
                         <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder="" 
@@ -180,25 +180,21 @@
                         [(ngModel)]="apeConductor" disabled>
                       </div>
                     </div>
-                    <div class="row mb-3">
+                    <div class="row mb-3"  *ngIf="codTipFlujoVehiculo ==1">
                       <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">N&uacute;mero de Licencia:</label>
                       <div class="col-sm-9 col-form-label col-form-label-sm">
                         <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder=""
                         [(ngModel)]="numLicencia"  disabled>
                       </div>
                     </div>
-
-                     
-                        <div class="row mb-3"  >
+                      <div class="row mb-3"   *ngIf="codTipFlujoVehiculo ==2">
                           <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Correo El&eacute;ctronico:</label>
                           <div class="col-sm-9 col-form-label col-form-label-sm">
                             <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder=""
                             [(ngModel)]="valEmailres"  disabled>
                           </div>
                         </div>
-              
-                  
-                        <div class="row mb-3" >
+                        <div class="row mb-3"  *ngIf="codTipFlujoVehiculo ==2">
                         <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">N&uacute;mero Telef&oacute;nico:</label>
                         <div class="col-sm-9 col-form-label col-form-label-sm">
                           <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder=""

@@ -40,6 +40,7 @@ export class DetalleComponent implements OnInit {
   flujoVehiculo:string;
   codTipoComprobante:string;
   codFlujoVehiculo:string;
+  codTipFlujoVehiculo:number;
   paisPlaca:string;
   nomPlaca:string;
   paisplacaCarreta:string;
@@ -70,6 +71,7 @@ export class DetalleComponent implements OnInit {
   rowsTblComprobante : RowTblCompago[] = new Array();
   urlConsultaDetalleTitulo="";
   urlConsultaTitulocomprobante="";
+  tituloConductorResponsable="";
   localEmpresaTransporte = [];
   constructor(private documentodescargaService:DocumentodescargaService,
     private router:Router,private http: HttpClient,
@@ -214,17 +216,24 @@ export class DetalleComponent implements OnInit {
     if(data.empresaTransporte.nomEmpresa!= null){
     this.nomEmpresa=data.empresaTransporte.nomEmpresa;
     }
-    if(data.empresaTransporte.flujoVehiculo!= null){
+    if(data.empresaTransporte?.flujoVehiculo!= null){
       this.flujoVehiculo=data.empresaTransporte.flujoVehiculo.codDatacat + ' - '+data.empresaTransporte.flujoVehiculo.desDataCat;
       this.codFlujoVehiculo=data.empresaTransporte.flujoVehiculo.codDatacat;
-      if(this.codFlujoVehiculo=="01"||this.codFlujoVehiculo=="02"){
+      if(this.codFlujoVehiculo=="01"||this.codFlujoVehiculo=="02"||this.codFlujoVehiculo=="04"){
         this.tituloConductorResponsable="Conductor";
         this.cargandoconductor(data);   
-      }else{
+        this.codTipFlujoVehiculo=1;
+      }else if(this.codFlujoVehiculo=="03"){
+        this.codFlujoVehiculo="03";
         this.tituloConductorResponsable="Responsable";
         this.cargandoresponsable(data);   
+        this.codTipFlujoVehiculo=2;
       }
       console.log('flujo de vehiculo: '+this.codFlujoVehiculo);
+    }else{
+      this.codTipFlujoVehiculo=2;
+      this.tituloConductorResponsable="Responsable";
+      this.cargandoresponsable(data);   
     }
     if(data.empresaTransporte.paisPlaca!= null){
     this.paisPlaca=data.empresaTransporte.paisPlaca.codDatacat + ' - '+ data.empresaTransporte.paisPlaca.desDataCat;
