@@ -125,11 +125,9 @@ export class ReporteComponent implements OnInit {
     this.sumaTotalFunction(this.totalesAduana);
     }
    sumaTotalFunction(data2:totalesAduanas[]):void{
-     const tempArray=[...data2].sort();
-     console.log(JSON.stringify(tempArray))
+
      var listaAduanas: any[] = [];
   const unicos: (string | totalesAduanas)[]=[];
-      for (var i=0; i < data2.length; i++) {
         let esduplicado019,esduplicado181,esduplicado172,esduplicado262=false;
         let cant172=0;
         let cant262=0;
