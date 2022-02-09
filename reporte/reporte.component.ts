@@ -135,6 +135,8 @@ export class ReporteComponent implements OnInit {
         let cant262=0;
         let cant181=0;
         let cant019=0;
+      for (var i=0; i < data2.length; i++) {
+     
           if (this.totalesAduana[i].concepto.codDatacat == "019"){       
              if(!listaAduanas.includes("019")){ 
               listaAduanas.push("019");    
@@ -193,9 +195,90 @@ export class ReporteComponent implements OnInit {
     this.totalesEstado=data.totalesPorEstado;
     console.log('TotalEstado' + data.totalPorEstado);
     this.totalesPorEstadoDocum=data.totalPorEstado;
-    this.sumaTotalFunctionEstado(this.totalesAduana);
+    this.sumaTotalFunctionEstado(this.totalesEstado);
   }
-  sumaTotalFunctionEstado(data2:totalesAduanas[]):void{
+  sumaTotalFunctionEstado(data2:totalesEstado[]):void{
+    var listaAduanasEstado: any[] = [];
+    let esduplicado01,esduplicado02,esduplicado03,esduplicado04,esduplicado05=false;
+      let codEstRegistrada01=0;
+      let codEstProceso02=0;
+      let codEstAceptada03=0;
+      let codEstRechazada04=0;
+      let codAnulada05=0;
+    for (var i=0; i < data2.length; i++) {
+     
+        if (this.totalesEstado[i].concepto.codDatacat == "01"){       
+          if(!listaAduanasEstado.includes("01")){ 
+            listaAduanasEstado.push("01");    
+          }else{
+            codEstRegistrada01=this.totalesEstado[i].cantidad;
+           this.lstAduanaEliminada=this.totalesEstado[i];
+           esduplicado01=true;
+          }
+        }
+       if (this.totalesEstado[i].concepto.codDatacat == "02"){
+        if(!listaAduanasEstado.includes("02")){ 
+          listaAduanasEstado.push("02");
+        }else{
+          codEstProceso02=this.totalesEstado[i].cantidad;
+          esduplicado02=true;
+        }
+      }
+      if (this.totalesEstado[i].concepto.codDatacat == "03"){
+        if(!listaAduanasEstado.includes("03")){ 
+          listaAduanasEstado.push("03");
+        }else{
+          codEstAceptada03=this.totalesEstado[i].cantidad;
+         esduplicado03=true;
+        }
+      }
+      if (this.totalesEstado[i].concepto.codDatacat == "04"){
+        if(!listaAduanasEstado.includes("04")){ 
+          listaAduanasEstado.push("04");
+        }else{
+          codEstRechazada04=this.totalesEstado[i].cantidad;
+         esduplicado04=true;
+        }
+      }
+      if (this.totalesEstado[i].concepto.codDatacat == "05"){
+        if(!listaAduanasEstado.includes("05")){ 
+          listaAduanasEstado.push("05");
+        }else{
+          codAnulada05=this.totalesEstado[i].cantidad;
+         esduplicado05=true;
+        }
+      }
+
+      if(esduplicado01||esduplicado02||esduplicado03||esduplicado04||esduplicado05){
+        this.totalesEstado.splice(i,1);
+        this.totalesEstado.forEach(function(item){
+          if (item.concepto.codDatacat == "01"){   
+               item.cantidad+=codEstRegistrada01;
+          }
+          if (item.concepto.codDatacat == "02"){   
+            item.cantidad+=codEstProceso02;
+           }
+           if (item.concepto.codDatacat == "03"){   
+            item.cantidad+=codEstAceptada03;
+           }
+           if (item.concepto.codDatacat == "04"){   
+            item.cantidad+=codEstRechazada04;
+           }
+           if (item.concepto.codDatacat == "05"){   
+            item.cantidad+=codAnulada05;
+           }
+        })
+       }
+  
+    }
+  }
+  cargandoTotalesTipoControl(data: reporteresumido){
+    this.totalesTipoControl=data.totalesPorTipoControl;
+    console.log('TipoControl' + data.totalPorTipoControl);
+    this.totalesPorTipoDocum=data.totalPorTipoControl;
+    this.sumaTotalFunctionTipoControl(this.totalesAduana);
+  }
+  sumaTotalFunctionTipoControl(data2:totalesAduanas[]):void{
     for (var i=0; i < data2.length; i++) {
       var listaAduanas: any[] = [];
       let esduplicadoFisico,esduplicadoDoc=false;
@@ -233,11 +316,6 @@ export class ReporteComponent implements OnInit {
 
 
     }
-  }
-  cargandoTotalesTipoControl(data: reporteresumido){
-    this.totalesTipoControl=data.totalesPorTipoControl;
-    console.log('TipoControl' + data.totalPorTipoControl);
-    this.totalesPorTipoDocum=data.totalPorTipoControl;
   }
   cargandoTotalesFuncionarioAduanero(data: reporteresumido){
     this.totalesFuncionarioAduanero=data.totalesPorFuncionarioAduanero;
