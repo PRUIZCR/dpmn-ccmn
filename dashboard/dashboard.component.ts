@@ -487,19 +487,22 @@ export class DashboardComponent implements OnInit {
     if (!regexp.test(codEmpresa)) {
       this.messageService.add({ key: 'msj', severity: 'warn', detail: 'Ingrese correctamente el código de empresa' });
       this.consultaForm.controls.codEmprTrans.setValue('');
-      this.consultaForm.controls.numeroRucEmprTrans.enable();
+      this.consultaForm.controls.numeroRucEmprTrans.setValue('');
+      this.consultaForm.controls.numeroRucEmprTrans.disable();
       return;
     }
 
     this.http
       .get<EmpresaTrans>(this.URL_RESOURCE_EMPRESA_TRANS + codEmpresa).subscribe((res: EmpresaTrans) => {
         this.consultaForm.controls.descRazonSocialEmprTrans.setValue(res.dnombre);
-        this.consultaForm.controls.numeroRucEmprTrans.enable();
+        this.consultaForm.controls.numeroRucEmprTrans.setValue('');
+        this.consultaForm.controls.numeroRucEmprTrans.disable();
       }, error => {
         console.log({ error });
         this.messageService.add({ key: 'msj', severity: 'warn', detail: 'El código de empresa no existe' });
         this.consultaForm.controls.numeroRucEmprTrans.enable();
         this.consultaForm.controls.codEmprTrans.setValue('');
+        this.consultaForm.controls.numeroRucEmprTrans.setValue('');
         this.consultaForm.controls.descRazonSocialEmprTrans.setValue('');
         this.consultaForm.controls.numeroRucEmprTrans.enable();
       })
@@ -524,10 +527,10 @@ export class DashboardComponent implements OnInit {
       this.messageService.add({ key: 'msj', severity: 'warn', detail: 'El número de RUC debe tener 11 dígitos' });
       if (tipo == '1') {
         this.consultaForm.controls.numeroRucEmprTrans.setValue('');
-        this.consultaForm.controls.codEmprTrans.enable();
+        this.consultaForm.controls.codEmprTrans.disable();
       } else {
         this.consultaForm.controls.numeroRucRemitente.setValue('');
-       this.consultaForm.controls.codEmprTrans.enable();
+       this.consultaForm.controls.codEmprTrans.disable();
       }
       return;
     }
