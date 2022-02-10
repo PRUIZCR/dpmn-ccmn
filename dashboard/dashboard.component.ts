@@ -494,7 +494,7 @@ export class DashboardComponent implements OnInit {
     this.http
       .get<EmpresaTrans>(this.URL_RESOURCE_EMPRESA_TRANS + codEmpresa).subscribe((res: EmpresaTrans) => {
         this.consultaForm.controls.descRazonSocialEmprTrans.setValue(res.dnombre);
-        this.consultaForm.controls.numeroRucEmprTrans.disable();
+        this.consultaForm.controls.numeroRucEmprTrans.enable();
       }, error => {
         console.log({ error });
         this.messageService.add({ key: 'msj', severity: 'warn', detail: 'El código de empresa no existe' });
