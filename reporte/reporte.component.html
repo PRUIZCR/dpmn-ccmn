@@ -40,7 +40,7 @@
                               <th class="text-center" style="width:10%">ID</th>
                               <th class="text-center" style="width:30%">Aduana</th>
                               <th class="text-center" style="width:30%">Tipo</th>
-                              <th class="text-center" style="width:30%">Cantidad</th>
+                              <th class="text-right" style="width:30%">Cantidad</th>
                           </tr>
                       </ng-template>
                       <ng-template pTemplate="emptymessage">
@@ -56,17 +56,17 @@
                               <ng-template #nolstDpmn>
                                 <td class="text-center">DPMN </td>
                                 </ng-template>
-                              <td class="text-center">{{totalesAduana.cantidad}}</td>
+                              <td class="text-right">{{totalesAduana.cantidad}}</td>
                           </tr>
                       </ng-template>
                     </p-table>
                 </div>
                 <div class="card-footer">
                     <div class="row">
-                        <div class="col-sm-8 text-center" >
+                        <div class="col-sm-10 text-right" >
                             Total:
                         </div>
-                        <div class="col-sm-4 text-center"> 
+                        <div class="col-sm-2 text-right"> 
                                 {{totalesPorAduanasDocum}}                           
                         </div>
                     </div>
@@ -87,8 +87,8 @@
                       <ng-template pTemplate="header">
                           <tr>
                               <th class="text-center" style="width:10%">ID</th>
-                              <th class="text-center" style="width:70%">Tipo de Control</th>
-                              <th class="text-center" style="width:20%">Cantidad</th>
+                              <th class="text-center" style="width:80%">Tipo de Control</th>
+                              <th class="text-right" style="width:10%">Cantidad</th>
           
                           </tr>
                       </ng-template>
@@ -99,11 +99,11 @@
                       </ng-template>
                       <ng-template pTemplate="body" let-totalesTipoControl let-rowIndex="rowIndex">
                           <tr>
-                              <td  class="text-center">{{rowIndex + 1}}</td>
-                              <td  class="text-center" *ngIf="totalesTipoControl.concepto.codDatacat">{{totalesTipoControl.concepto.codDatacat}} - {{totalesTipoControl.concepto.desDataCat}}</td>
-                              <td  class="text-center" *ngIf="!totalesTipoControl.concepto.codDatacat">No tiene</td>
-                              <td  class="text-center" *ngIf="totalesTipoControl.concepto.codDatacat">{{totalesTipoControl.cantidad}}</td>
-                              <td  class="text-center" *ngIf="!totalesTipoControl.concepto.codDatacat">{{totalesTipoControl.cantidad}}</td>
+                              <td  class="text-center" style="width:10%" >{{rowIndex + 1}}</td>
+                              <td  class="text-center" style="width:10%"*ngIf="totalesTipoControl.concepto.codDatacat">{{totalesTipoControl.concepto.codDatacat}} - {{totalesTipoControl.concepto.desDataCat}}</td>
+                              <td  class="text-center" style="width:10%" *ngIf="!totalesTipoControl.concepto.codDatacat">No tiene</td>
+                              <td  class="text-center" style="width:60%" *ngIf="totalesTipoControl.concepto.codDatacat">{{totalesTipoControl.cantidad}}</td>
+                              <td  class="text-right" style="width:10%" *ngIf="!totalesTipoControl.concepto.codDatacat">{{totalesTipoControl.cantidad}}</td>
                             
                           </tr>
                       </ng-template>
@@ -111,10 +111,10 @@
                 </div>
                 <div class="card-footer">
                     <div class="row">
-                        <div class="col-sm-8 text-center" >
+                        <div class="col-sm-10 text-right" >
                             Total:
                         </div>
-                        <div class="col-sm-4 text-center"> 
+                        <div class="col-sm-2 text-right"> 
                                 {{totalesPorTipoDocum}}                           
                         </div>
                     </div>
@@ -136,7 +136,7 @@
                           <tr>
                               <th class="text-center" style="width:10%">ID</th>
                               <th class="text-center" style="width:70%">Usuario</th>
-                              <th class="text-center" style="width:20%">Cantidad</th>
+                              <th class="text-right" style="width:20%">Cantidad</th>
           
                           </tr>
                       </ng-template>
@@ -149,17 +149,17 @@
                           <tr>
                               <td class="text-center" >{{rowIndex + 1}}</td>
                               <td class="text-center" >{{totalesUsuarioExterno.concepto.codDatacat}} - {{totalesUsuarioExterno.concepto.desDataCat}}</td>
-                              <td class="text-center" >{{totalesUsuarioExterno.cantidad}}</td>               
+                              <td class="text-right" >{{totalesUsuarioExterno.cantidad}}</td>               
                           </tr>
                       </ng-template>
                     </p-table>
                 </div>
                 <div class="card-footer">
                     <div class="row">
-                        <div class="col-sm-8 text-center" >
+                        <div class="col-sm-10 text-right" >
                             Total:
                         </div>
-                        <div class="col-sm-4 text-center"> 
+                        <div class="col-sm-2 text-right"> 
                                 {{totalesPorUsuarioExterno}}                           
                         </div>
                     </div>
@@ -183,8 +183,8 @@
                           <ng-template pTemplate="header">
                               <tr>
                                   <th class="text-center" style="width:10%">ID</th>
-                                  <th class="text-center" style="width:45%">Estado</th>
-                                  <th class="text-center" style="width:45%">Cantidad</th>
+                                  <th class="text-center" style="width:80%">Estado</th>
+                                  <th class="text-right" style="width:10%">Cantidad</th>
               
                               </tr>
                           </ng-template>
@@ -195,9 +195,9 @@
                           </ng-template>
                           <ng-template pTemplate="body" let-totalesEstado let-rowIndex="rowIndex">
                               <tr>
-                                  <td class="text-center" >{{rowIndex + 1}}</td>
-                                  <td class="text-center" >{{totalesEstado.concepto.codDatacat}} - {{totalesEstado.concepto.desDataCat}}</td>
-                                  <td class="text-center" >{{totalesEstado.cantidad}}</td>
+                                  <td class="text-center" style="width:10%" >{{rowIndex + 1}}</td>
+                                  <td class="text-center" style="width:80%">{{totalesEstado.concepto.codDatacat}} - {{totalesEstado.concepto.desDataCat}}</td>
+                                  <td class="text-right" style="width:10%">{{totalesEstado.cantidad}}</td>
                                 
                               </tr>
                           </ng-template>
@@ -205,10 +205,10 @@
                     </div>
                     <div class="card-footer">
                         <div class="row">
-                            <div class="col-sm-7 text-center" >
+                            <div class="col-sm-10 text-right" >
                                 Total:
                             </div>
-                            <div class="col-sm-5 text-center"> 
+                            <div class="col-sm-2 text-right"> 
                                     {{totalesPorEstadoDocum}}                           
                             </div>
                 </div>
@@ -229,8 +229,8 @@
                           <ng-template pTemplate="header">
                               <tr>
                                   <th class="text-center" style="width:10%">ID</th>
-                                  <th class="text-center" style="width:45%">Estado</th>
-                                  <th class="text-center" style="width:45%">Cantidad</th>
+                                    <th class="text-center" style="width:80%">Estado</th>
+                                    <th class="text-right" style="width:10%">Cantidad</th>
               
                               </tr>
                           </ng-template>
@@ -241,19 +241,19 @@
                           </ng-template>
                             <ng-template pTemplate="body" let-totalesEstado let-rowIndex="rowIndex">
                               <tr>
-                                    <td class="text-center" >{{rowIndex + 1}}</td>
-                                    <td class="text-center" >{{totalesEstado.concepto.codDatacat}} - {{totalesEstado.concepto.desDataCat}}</td>
-                                    <td class="text-center" >{{totalesEstado.cantidad}}</td>
+                                    <td class="text-center" style="width:10%">{{rowIndex + 1}}</td>
+                                    <td class="text-center" style="width:80%">{{totalesEstado.concepto.codDatacat}} - {{totalesEstado.concepto.desDataCat}}</td>
+                                    <td class="text-right" style="width:10%">{{totalesEstado.cantidad}}</td>
                               </tr>
                           </ng-template>
                         </p-table>
                     </div>
                         <div class="card-footer">
                             <div class="row">
-                                <div class="col-sm-8 text-center" >
+                                <div class="col-sm-10 text-right" >
                                     Total:
                                 </div>
-                                <div class="col-sm-4 text-center"> 
+                                <div class="col-sm-2 text-right"> 
                                         {{totalesPorEstadoDocum}}                           
                                 </div>
                             </div>
@@ -273,9 +273,9 @@
                         [rowsPerPageOptions]="[5,10,25,50]"  >
                           <ng-template pTemplate="header">
                               <tr>
-                                  <th class="text-center" style="width:30%">ID</th>
-                                  <th class="text-center" style="width:60%">Funcionario Aduanero</th>
-                                  <th class="text-center" style="width:10%">Cantidad</th>
+                                  <th class="text-center" style="width:10%">ID</th>
+                                  <th class="text-center" style="width:80%">Funcionario Aduanero</th>
+                                  <th class="text-right" style="width:10%">Cantidad</th>
               
                               </tr>
                           </ng-template>
@@ -286,19 +286,19 @@
                           </ng-template>
                           <ng-template pTemplate="body" let-totalesFuncionarioAduanero let-rowIndex="rowIndex">
                               <tr>
-                                  <td class="text-center" style="width:30%">{{rowIndex + 1}}</td>
-                                  <td class="text-center" style="width:60%">{{totalesFuncionarioAduanero.concepto.codDatacat}} - {{totalesFuncionarioAduanero.concepto.desDataCat}}</td>
-                                  <td class="text-center" style="width:10%">{{totalesFuncionarioAduanero.cantidad}}</td>
+                                  <td class="text-center" style="width:10%">{{rowIndex + 1}}</td>
+                                  <td class="text-center" style="width:80%">{{totalesFuncionarioAduanero.concepto.codDatacat}} - {{totalesFuncionarioAduanero.concepto.desDataCat}}</td>
+                                  <td class="text-right" style="width:10%">{{totalesFuncionarioAduanero.cantidad}}</td>
                               </tr>
                           </ng-template>
                         </p-table>
                     </div>
                     <div class="card-footer">
                         <div class="row">
-                            <div class="col-sm-8 text-center" >
+                            <div class="col-sm-10 text-right" >
                                 Total:
                             </div>
-                            <div class="col-sm-4 text-center"> 
+                            <div class="col-sm-2 text-right"> 
                                     {{totalesPorFuncionarioAduanero}}                           
                             </div>
                         </div>
