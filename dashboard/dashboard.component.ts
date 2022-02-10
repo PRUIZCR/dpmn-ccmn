@@ -521,17 +521,19 @@ export class DashboardComponent implements OnInit {
     var regexp = new RegExp('^[0-9]{11}$');
 
     if (ruc== undefined || ruc==null || ruc.length == 0){
+      this.consultaForm.controls.numeroRucEmprTrans.setValue('');
       this.consultaForm.controls.numeroRucEmprTrans.enable();
+      this.consultaForm.controls.codEmprTrans.enable();
       return;
     }
     if (!regexp.test(ruc)) {
       this.messageService.add({ key: 'msj', severity: 'warn', detail: 'El número de RUC debe tener 11 dígitos' });
       if (tipo == '1') {
         this.consultaForm.controls.numeroRucEmprTrans.setValue('');
-        this.consultaForm.controls.codEmprTrans.disable();
+        this.consultaForm.controls.codEmprTrans.enable();
       } else {
         this.consultaForm.controls.numeroRucRemitente.setValue('');
-       this.consultaForm.controls.codEmprTrans.disable();
+       this.consultaForm.controls.codEmprTrans.enable();
       }
       return;
     }
@@ -683,7 +685,7 @@ buscarRUC(tipo: string) {
       descRazonSocialEmprTrans: new FormControl(),
       descRazonSocialRemitente: new FormControl()
     });
-    this.buscarRUC('1');
+    this.buscarRUCIntranet('1');
     this.cargarAduanaPuno(this.aduanaFuncionarioLogueo);
 
   }
