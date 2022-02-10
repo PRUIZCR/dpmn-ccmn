@@ -539,10 +539,10 @@ export class DashboardComponent implements OnInit {
       .get<Ruc>(this.RESOURCE_RUC + ruc).subscribe((res: Ruc) => {
         if (tipo == '1') {
           this.consultaForm.controls.descRazonSocialEmprTrans.setValue(res.razonSocial);
-          this.consultaForm.controls.codEmprTrans.enable();
+          this.consultaForm.controls.codEmprTrans.disable();
         } else {
           this.consultaForm.controls.descRazonSocialRemitente.setValue(res.razonSocial);
-          this.consultaForm.controls.codEmprTrans.enable();
+          this.consultaForm.controls.codEmprTrans.disable();
         }
       }, error => {
         console.log({ error });
