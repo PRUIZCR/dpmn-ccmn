@@ -349,7 +349,7 @@ export class DashboardComponent implements OnInit {
 
     if (!regexp.test(placa)) {
       this.messageService.add({ key: 'msj', severity: 'warn', detail: 'Placa de vehículo debe tener entre 5 y 8 caracteres' });
-      this.consultaForm.controls.numPlaca.setValue('');
+      //this.consultaForm.controls.numPlaca.setValue('');
     }
   }
 
@@ -520,9 +520,10 @@ export class DashboardComponent implements OnInit {
 
     var regexp = new RegExp('^[0-9]{11}$');
 
-    if (ruc== undefined || ruc==null || ruc.length == 0)
+    if (ruc== undefined || ruc==null || ruc.length == 0){
+      this.consultaForm.controls.numeroRucEmprTrans.enable();
       return;
-
+    }
     if (!regexp.test(ruc)) {
       this.messageService.add({ key: 'msj', severity: 'warn', detail: 'El número de RUC debe tener 11 dígitos' });
       if (tipo == '1') {
