@@ -11,7 +11,7 @@
 <br>
 <div class="card border-primary mb-3" style="max-width: 100%;">
 <div class="card-header bg-primary" style="background-color: #4683df;">
-  <div class="p-2 flex-grow-1 bd-highlight " style="color: white; font-weight:bold" >Consulta de {{urlConsultaDetalleTitulo }} NÂ° {{numeroDeDocumentoDescarga}} </div>
+  <div class="p-2 flex-grow-1 bd-highlight " style="color: white; font-weight:bold" >Consulta de {{urlConsultaDetalleTitulo }} N° {{numeroDeDocumentoDescarga}} </div>
 </div>
 <div class="card-body text-primary"  style="border-color: #4683df;">
   <p-accordion [multiple]="true">
@@ -302,7 +302,7 @@
                     <td style="width:15%">{{comprobantes.desRazonSocialDestinatario}}</td>
                     <td style="width:15%"  *ngIf="tipoOrigen=='IT' else FADestino">{{comprobantes.ubigeoDestino.nomDepartamento}}-{{comprobantes.ubigeoDestino.nomDistrito}}-{{comprobantes.ubigeoDestino.nomProvincia}}</td>
                     <ng-template #FADestino>
-                      <td style="width:15%" >{{comprobantes.ubigeoDestino.nomDistrito}}-{{comprobantes.ubigeoDestino.nomProvincia}}-{{comprobantes.ubigeoDestino.nomDepartamento}}</td>
+                      <td style="width:15%" >{{comprobantes.ubigeoDestino.nomDepartamento}}-{{comprobantes.ubigeoDestino.nomDistrito}}-{{comprobantes.ubigeoDestino.nomProvincia}}</td>
                     </ng-template>
                 </tr>
             </ng-template>
@@ -332,9 +332,9 @@
                     </ng-template>
                     <th style="width:10%" class="text-center">Serie</th>
                     <th style="width:10%" class="text-center">Sub Partida</th>
-                    <th style="width:35%" class="text-center" *ngIf="numeroTipoDocum=='1' else  DPMNDesComercial">Descripci&oacute;n Comercial</th>
+                    <th style="width:15%" class="text-center" *ngIf="numeroTipoDocum=='1' else  DPMNDesComercial">Descripci&oacute;n Comercial</th>
                     <ng-template #DPMNDesComercial>
-                      <th style="width:35%" class="text-center">Descripci&oacute;n Comercial</th>
+                      <th style="width:15%" class="text-center">Descripci&oacute;n Comercial</th>
                     </ng-template>
                     <th style="width:2%" class="text-center" *ngIf="numeroTipoDocum=='1' else  DPMNPesoBruto"  >Peso Bruto</th>
                     <ng-template #DPMNPesoBruto>
@@ -367,25 +367,25 @@
                 <tr>
                     <td style="width:5%">{{rowIndex + 1}}</td>
                     <td style="width:15%" class="text-center">{{seriesDeclaracionDpmn.dam}}</td>
-                    <td style="width:10%" class="text-center" >{{seriesDeclaracionDpmn.numSerie}}</td>
+                    <td style="width:5%" class="text-center" >{{seriesDeclaracionDpmn.numSerie}}</td>
                     <td style="width:10%" class="text-center" >{{seriesDeclaracionDpmn.codSubPartida}}</td>
-                    <td style="width:55%" class="text-center" >{{seriesDeclaracionDpmn.desComercial}}</td>
-                    <td style="width:2%"style="text-align:center">{{seriesDeclaracionDpmn.mtoPesoBruto}}</td>
-                    <td style="width:3%" style="text-align:center">{{seriesDeclaracionDpmn.mtoPesoNeto}}</td>
+                    <td style="width:15%" class="text-center" >{{seriesDeclaracionDpmn.desComercial}}</td>
+                    <td style="width:5%"style="text-align:right">{{seriesDeclaracionDpmn.mtoPesoBruto}}</td>
+                    <td style="width:5%" style="text-align:right">{{seriesDeclaracionDpmn.mtoPesoNeto}}</td>
                    
-                    <td style="width:8%" style="text-align:center" *ngIf="numeroTipoDocum=='1' else  CantDeclaVal">{{seriesDeclaracionDpmn.cntUnidadFisica}}</td>
+                    <td style="width:12%" style="text-align:right" *ngIf="numeroTipoDocum=='1' else  CantDeclaVal">{{seriesDeclaracionDpmn.cntUnidadFisica}}</td>
                     <ng-template #CantDeclaVal>
-                    <td style="width:7%" style="text-align:center">{{seriesDeclaracionDpmn.cntUnidadFisica}}</td>
+                    <td style="width:7%" style="text-align:right">{{seriesDeclaracionDpmn.cntUnidadFisica}}</td>
                     </ng-template>
 
 
-                    <td style="width:7%" style="text-align:right" *ngIf="numeroTipoDocum=='1' else  CantRetiVal">{{seriesDeclaracionDpmn.cntRetirada}}</td>
+                    <td style="width:13%" style="text-align:right" *ngIf="numeroTipoDocum=='1' else  CantRetiVal">{{seriesDeclaracionDpmn.cntRetirada}}</td>
                     <ng-template #CantRetiVal>
                     <td style="width:8%" style="text-align:right">{{seriesDeclaracionDpmn.cntRetirada}}</td>
                     </ng-template>
-                    <td style="width:15%" style="text-align:right" *ngIf="numeroTipoDocum=='1'">{{seriesDeclaracionDpmn.numSecDescarga}}</td>
-                    <td style="width:15%" style="text-align:right" *ngIf="numeroTipoDocum=='1'">{{seriesDeclaracionDpmn.cntSaldo}}</td>
-                    <td style="width:15%" style="text-align:center">{{seriesDeclaracionDpmn.unidadFisica.codDatacat}}</td>
+                    <td style="width:10%" style="text-align:right" *ngIf="numeroTipoDocum=='1'">{{seriesDeclaracionDpmn.numSecDescarga}}</td>
+                    <td style="width:10%" style="text-align:right" *ngIf="numeroTipoDocum=='1'">{{seriesDeclaracionDpmn.cntSaldo}}</td>
+                    <td style="width:10%" style="text-align:center">{{seriesDeclaracionDpmn.unidadFisica.codDatacat}}</td>
                 </tr>
             </ng-template>
           </p-table>
