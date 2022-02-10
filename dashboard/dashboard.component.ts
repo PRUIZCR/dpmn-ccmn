@@ -480,13 +480,14 @@ export class DashboardComponent implements OnInit {
   buscarEmprTrans() {
     var regexp = new RegExp('^[0-9]{4,6}$');
     var codEmpresa = this.consultaForm.controls.codEmprTrans.value;
-
+    this.consultaForm.controls.numeroRucEmprTrans.disable();
     if (codEmpresa.length == 0)
       return;
 
     if (!regexp.test(codEmpresa)) {
       this.messageService.add({ key: 'msj', severity: 'warn', detail: 'Ingrese correctamente el código de empresa' });
       this.consultaForm.controls.codEmprTrans.setValue('');
+      this.consultaForm.controls.numeroRucEmprTrans.enable();
       return;
     }
 
@@ -496,6 +497,7 @@ export class DashboardComponent implements OnInit {
       }, error => {
         console.log({ error });
         this.messageService.add({ key: 'msj', severity: 'warn', detail: 'El código de empresa no existe' });
+        this.consultaForm.controls.numeroRucEmprTrans.enable();
         this.consultaForm.controls.codEmprTrans.setValue('');
         this.consultaForm.controls.descRazonSocialEmprTrans.setValue('');
       })
@@ -503,6 +505,7 @@ export class DashboardComponent implements OnInit {
 
   /*Obtiene la razon social por RUC*/
   buscarRUCIntranet(tipo: string) {
+    this.consultaForm.controls.codEmprTrans.disable();
     var ruc = '';
     if (tipo == '1') {
       ruc = this.consultaForm.controls.numeroRucEmprTrans.value;
@@ -539,10 +542,12 @@ export class DashboardComponent implements OnInit {
           msjError = "RUC de la Empresa de Transporte no existe";
           this.consultaForm.controls.numeroRucEmprTrans.setValue('');
           this.consultaForm.controls.descRazonSocialEmprTrans.setValue('');
+          this.consultaForm.controls.codEmprTrans.enable();
         } else {
           msjError = "RUC del remitente no existe";
           this.consultaForm.controls.numeroRucRemitente.setValue('');
           this.consultaForm.controls.descRazonSocialRemitente.setValue('');
+          this.consultaForm.controls.codEmprTrans.enable();
         }
         this.messageService.add({ key: 'msj', severity: 'warn', detail: msjError });
       })
