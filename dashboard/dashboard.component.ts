@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { DatePipe, formatDate } from '@angular/common';
 import {Router} from "@angular/router"
 import { FormControl, FormGroup, FormBuilder, Validators,ReactiveFormsModule  } from '@angular/forms';
@@ -494,13 +494,14 @@ export class DashboardComponent implements OnInit {
     this.http
       .get<EmpresaTrans>(this.URL_RESOURCE_EMPRESA_TRANS + codEmpresa).subscribe((res: EmpresaTrans) => {
         this.consultaForm.controls.descRazonSocialEmprTrans.setValue(res.dnombre);
-        this.consultaForm.controls.codEmprTrans.enable();
+        this.consultaForm.controls.numeroRucEmprTrans.disable();
       }, error => {
         console.log({ error });
         this.messageService.add({ key: 'msj', severity: 'warn', detail: 'El código de empresa no existe' });
         this.consultaForm.controls.numeroRucEmprTrans.enable();
         this.consultaForm.controls.codEmprTrans.setValue('');
         this.consultaForm.controls.descRazonSocialEmprTrans.setValue('');
+        this.consultaForm.controls.numeroRucEmprTrans.enable();
       })
   }
 
@@ -662,7 +663,7 @@ buscarRUC(tipo: string) {
       tipoControl: [{ value:' ', disabled: false}],
       codPaisPlaca: [''],
       numPlaca: [''],
-      numeroRucEmprTrans: [this.numeroRUC],
+      numeroRucEmprTrans: [''],
       tipoBusqueda: ['', [Validators.required]],
       codAduanaDocumento: [{ value:this.aduanaFuncionarioLogueo, disabled: true }],
       codPuestoControl: [{ value: '', disabled: true }],
