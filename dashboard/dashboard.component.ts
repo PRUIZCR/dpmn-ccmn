@@ -686,8 +686,10 @@ buscarRUC(tipo: string) {
       descRazonSocialRemitente: new FormControl()
     });
     this.buscarRUCIntranet('1');
+    this.consultaForm.controls.codEmprTrans.setValue('');
     this.consultaForm.controls.numeroRucEmprTrans.setValue('');
-    this.consultaForm.controls.descRazonSocialEmprTrans.setValue('');
+    this.consultaForm.controls.codEmprTrans.enable();
+    this.consultaForm.controls.numeroRucEmprTrans.enable();
     this.cargarAduanaPuno(this.aduanaFuncionarioLogueo);
 
   }
