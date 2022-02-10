@@ -494,6 +494,7 @@ export class DashboardComponent implements OnInit {
     this.http
       .get<EmpresaTrans>(this.URL_RESOURCE_EMPRESA_TRANS + codEmpresa).subscribe((res: EmpresaTrans) => {
         this.consultaForm.controls.descRazonSocialEmprTrans.setValue(res.dnombre);
+        this.consultaForm.controls.codEmprTrans.enable();
       }, error => {
         console.log({ error });
         this.messageService.add({ key: 'msj', severity: 'warn', detail: 'El código de empresa no existe' });
@@ -522,8 +523,10 @@ export class DashboardComponent implements OnInit {
       this.messageService.add({ key: 'msj', severity: 'warn', detail: 'El número de RUC debe tener 11 dígitos' });
       if (tipo == '1') {
         this.consultaForm.controls.numeroRucEmprTrans.setValue('');
+        this.consultaForm.controls.codEmprTrans.enable();
       } else {
         this.consultaForm.controls.numeroRucRemitente.setValue('');
+       this.consultaForm.controls.codEmprTrans.enable();
       }
       return;
     }
@@ -532,8 +535,10 @@ export class DashboardComponent implements OnInit {
       .get<Ruc>(this.RESOURCE_RUC + ruc).subscribe((res: Ruc) => {
         if (tipo == '1') {
           this.consultaForm.controls.descRazonSocialEmprTrans.setValue(res.razonSocial);
+          this.consultaForm.controls.codEmprTrans.enable();
         } else {
           this.consultaForm.controls.descRazonSocialRemitente.setValue(res.razonSocial);
+          this.consultaForm.controls.codEmprTrans.enable();
         }
       }, error => {
         console.log({ error });
