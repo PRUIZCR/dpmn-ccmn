@@ -64,27 +64,27 @@
           <label>Placa de vehículo: </label>
         </div>
         <div class="field col-12 md:col-4">
-          <p-dropdown *ngIf="aduanaFuncionarioLogueo=='019' else paisPuno" [filter]="true"   inputId="paisPlaca" [options]="lstPaisVehiculo" formControlName="codPaisPlaca" placeholder="Seleccionar"
+          <p-dropdown [filter]="true"   inputId="paisPlaca" [options]="lstPaisVehiculo" formControlName="codPaisPlaca" placeholder="Seleccionar"
             optionLabel="descripcion" optionValue="codigo" [style]="{'width':'100%'}" ></p-dropdown>
         </div>
-        <ng-template #paisPuno>
+       <!-- <ng-template #paisPuno>
           <div class="field col-12 md:col-4">
             <p-dropdown *ngIf="aduanaFuncionarioLogueo=='181' else paisTacna" [filter]="true"   inputId="paisPlaca" [options]="lstPaisVehiculoPuno" formControlName="codPaisPlaca" placeholder="Seleccionar"
-            optionLabel="descripcion" optionValue="codigo"    [style]="{'width':'100%'}"></p-dropdown>
+            optionLabel="descripcion" optionValue="codigo"></p-dropdown>
           </div>
         </ng-template>
         <ng-template #paisTacna>
           <div class="field col-12 md:col-4">
             <p-dropdown *ngIf="aduanaFuncionarioLogueo=='172' else paisTodos" [filter]="true"   inputId="paisPlaca" [options]="lstPaisVehiculoTacna" formControlName="codPaisPlaca" placeholder="Seleccionar"
-            optionLabel="descripcion" optionValue="codigo"  [style]="{'width':'100%'}"></p-dropdown>
+            optionLabel="descripcion" optionValue="codigo"></p-dropdown>
           </div>
         </ng-template>
         <ng-template #paisTodos>
           <div class="field col-12 md:col-4">
             <p-dropdown [filter]="true"   inputId="paisPlaca" [options]="lstPaisVehiculo" formControlName="codPaisPlaca" placeholder="Seleccionar"
-            optionLabel="descripcion" optionValue="codigo" [style]="{'minWidth':'100%'}"></p-dropdown>
+            optionLabel="descripcion" optionValue="codigo"></p-dropdown>
           </div>
-        </ng-template>
+        </ng-template>-->
 
         <div class="field col-12 md:col-2">
           <input type="text" class="form-control" id="txtNumPlaca" formControlName="numPlaca" 
