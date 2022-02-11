@@ -116,12 +116,23 @@ export class DashboardComponent implements OnInit {
     this.numeroRUC = this.tokenAccesoService.numeroRUC;
     this.tipoOrigen = this.tokenAccesoService.origen;
     this.nroRegistro = this.tokenAccesoService.nroRegistro;
-    this.limpiar();
-    this.consultaForm.controls.numeroRucEmprTrans.setValue(this.numeroRUC);
     this.cargarAduanaFuncionario(this.nroRegistro);
+    this.aduanaFuncionarioLogueo=this.aduanaFuncionarioLogueo;
+     if( this.aduanaFuncionarioLogueo=="019"){
+      this.lstPaisVehiculo=this.lstPaisVehiculo;
+    }else if(this.aduanaFuncionarioLogueo=="172"){
+      this.lstPaisVehiculo=this.lstPaisVehiculoTacna;
+    }else if(this.aduanaFuncionarioLogueo=="181"){
+      this.lstPaisVehiculo=this.lstPaisVehiculoPuno;
+    }
+    this.limpiar();
+
     this.consultaForm.controls.codAduanaDocumento.setValue(this.aduanaFuncionario);
     this.consultaForm.controls.codAduanaDAM.setValue(this.aduanaFuncionario);
+    if(this.tipoOrigen=="IT"){
+    this.consultaForm.controls.numeroRucEmprTrans.setValue(this.numeroRUC);
     this.buscarRUCIntranet('1');
+  }
   }
 
   async consultar() {
@@ -441,7 +452,7 @@ export class DashboardComponent implements OnInit {
        this.aduanaFuncionario=datCatAduanaDescarga.codDatacat;
        this.puestoControlFuncionario=datCatPtoControl.codigo;
        this.consultaForm.controls.codAduanaDocumento.setValue(this.aduanaFuncionario);
-      console.log('ha ocurrido un error:' + datCatAduanaDescarga.codDatacat);
+       console.log('datCatAduanaDescarga:' + datCatAduanaDescarga.codDatacat);
     }, () => {
       console.log('ha ocurrido un error cargarAduanaFuncionario');
     });
@@ -482,7 +493,7 @@ export class DashboardComponent implements OnInit {
     var regexp = new RegExp('^[0-9]{4,6}$');
     var codEmpresa = this.consultaForm.controls.codEmprTrans.value;
     this.codRucView=true;
-    if (codEmpresa.length == 0 || codEmpresa== undefined || codEmpresa==null ){
+    if (codEmpresa =='' || codEmpresa== undefined || codEmpresa==null ){
       this.consultaForm.controls.numeroRucEmprTrans.setValue('');
       this.consultaForm.controls.numeroRucEmprTrans.enable();
       this.consultaForm.controls.codEmprTrans.enable();
@@ -527,7 +538,7 @@ export class DashboardComponent implements OnInit {
     var regexp = new RegExp('^[0-9]{11}$');
 
     if (ruc== undefined || ruc==null || ruc.length == 0){
-      this.consultaForm.controls.numeroRucEmprTrans.setValue('');
+      this.consultaForm.controls.numeroRucEmprTrans.setValue(null);
       this.consultaForm.controls.numeroRucEmprTrans.enable();
       this.consultaForm.controls.codEmprTrans.enable();
       return;
@@ -535,12 +546,12 @@ export class DashboardComponent implements OnInit {
     if (!regexp.test(ruc)) {
       this.messageService.add({ key: 'msj', severity: 'warn', detail: 'El número de RUC debe tener 11 dígitos' });
       if (tipo == '1') {
-        this.consultaForm.controls.numeroRucEmprTrans.setValue('');
+        this.consultaForm.controls.numeroRucEmprTrans.setValue(ruc);
         this.consultaForm.controls.codEmprTrans.enable();
         this.consultaForm.controls.numeroRucEmprTrans.enable();
         this.codEmpresaView=false;
       } else {
-        this.consultaForm.controls.numeroRucEmprTrans.setValue('');
+        this.consultaForm.controls.numeroRucEmprTrans.setValue(ruc);
        this.consultaForm.controls.codEmprTrans.enable();
        this.consultaForm.controls.numeroRucEmprTrans.enable();
       }
@@ -562,14 +573,14 @@ export class DashboardComponent implements OnInit {
         var msjError = "";
         if (tipo == '1') {
           msjError = "RUC de la Empresa de Transporte no existe";
-          this.consultaForm.controls.numeroRucEmprTrans.setValue('');
+          this.consultaForm.controls.numeroRucEmprTrans.setValue(ruc);
           this.consultaForm.controls.descRazonSocialEmprTrans.setValue('');
           this.consultaForm.controls.codEmprTrans.enable();
           this.consultaForm.controls.numeroRucEmprTrans.enable();
           this.codEmpresaView=false;
         } else {
           msjError = "RUC del remitente no existe";
-          this.consultaForm.controls.numeroRucRemitente.setValue('');
+          this.consultaForm.controls.numeroRucRemitente.setValue(ruc);
           this.consultaForm.controls.descRazonSocialRemitente.setValue('');
           this.consultaForm.controls.codEmprTrans.enable();
           this.consultaForm.controls.numeroRucEmprTrans.enable();
@@ -588,15 +599,15 @@ buscarRUC(tipo: string) {
 
   var regexp = new RegExp('^[0-9]{11}$');
 
-  if (ruc== undefined || ruc==null || ruc.length == 0)
+  if (ruc== undefined || ruc==null || ruc == '')
     return;
 
   if (!regexp.test(ruc)) {
     this.messageService.add({ key: 'msj', severity: 'warn', detail: 'El número de RUC debe tener 11 dígitos' });
     if (tipo == '1') {
-      this.consultaForm.controls.numeroRucEmprTrans.setValue('');
+      this.consultaForm.controls.numeroRucEmprTrans.setValue(ruc);
     } else {
-      this.consultaForm.controls.numeroRucRemitente.setValue('');
+      this.consultaForm.controls.numeroRucRemitente.setValue(ruc);
     }
     return;
   }
@@ -613,11 +624,11 @@ buscarRUC(tipo: string) {
       var msjError = "";
       if (tipo == '1') {
         msjError = "RUC de la Empresa de Transporte no existe";
-        this.consultaForm.controls.numeroRucEmprTrans.setValue('');
+        this.consultaForm.controls.numeroRucEmprTrans.setValue(ruc);
         this.consultaForm.controls.descRazonSocialEmprTrans.setValue('');
       } else {
         msjError = "RUC del remitente no existe";
-        this.consultaForm.controls.numeroRucRemitente.setValue('');
+        this.consultaForm.controls.numeroRucRemitente.setValue(ruc);
         this.consultaForm.controls.descRazonSocialRemitente.setValue('');
       }
       this.messageService.add({ key: 'msj', severity: 'warn', detail: msjError });
@@ -683,7 +694,7 @@ buscarRUC(tipo: string) {
       tipoControl: [{ value:' ', disabled: false}],
       codPaisPlaca: [''],
       numPlaca: [''],
-      numeroRucEmprTrans:[{ value: '', disabled: false}],
+      numeroRucEmprTrans:[{ value: null, disabled: false}],
       tipoBusqueda: ['', [Validators.required]],
       codAduanaDocumento: [{ value:this.aduanaFuncionarioLogueo, disabled: true }],
       codPuestoControl: [{ value: '', disabled: true }],
@@ -700,12 +711,14 @@ buscarRUC(tipo: string) {
       descRazonSocialRemitente: new FormControl()
     });
     //this.buscarRUCIntranet('1');
-
-    this.consultaForm.controls.codEmprTrans.enable();
+    this.consultaForm.controls.numeroRucEmprTrans.setValue(null);
     this.consultaForm.controls.numeroRucEmprTrans.enable();
+    this.consultaForm.controls.codEmprTrans.enable();
     this.codEmpresaView=false;
     this.codRucView=false;
     this.cargarAduanaPuno(this.aduanaFuncionarioLogueo);
+    console.log('codempresa:' + this.consultaForm.controls.codEmprTrans.value);
+    console.log('numeroRucEmprTrans:' + this.consultaForm.controls.numeroRucEmprTrans.value);
   }
 
 
