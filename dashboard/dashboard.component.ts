@@ -1,4 +1,4 @@
- import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { DatePipe, formatDate } from '@angular/common';
 import {Router} from "@angular/router"
 import { FormControl, FormGroup, FormBuilder, Validators,ReactiveFormsModule  } from '@angular/forms';
@@ -117,11 +117,10 @@ export class DashboardComponent implements OnInit {
     this.tipoOrigen = this.tokenAccesoService.origen;
     this.nroRegistro = this.tokenAccesoService.nroRegistro;
     this.limpiar();
-    this.consultaForm.controls.numeroRucEmprTrans.setValue(this.numeroRUC);
+    //this.consultaForm.controls.numeroRucEmprTrans.setValue(this.numeroRUC);
     this.cargarAduanaFuncionario(this.nroRegistro);
     this.consultaForm.controls.codAduanaDocumento.setValue(this.aduanaFuncionario);
     this.consultaForm.controls.codAduanaDAM.setValue(this.aduanaFuncionario);
-    this.buscarRUCIntranet('1');
   }
 
   async consultar() {
@@ -413,7 +412,7 @@ export class DashboardComponent implements OnInit {
       }else{
         this.aduanaFuncionario=aduanaFuncionario;
       }
-  }
+    }
     cargarAduanaFuncionario(nroRegistro:string){
       //this.ubicacionFuncionarioService.buscar(nroRegistro).subscribe( (ubicacion: UbicacionFuncionario) => {
       //this.cargarControlesPaso(ubicacion.puestoControl);
@@ -483,7 +482,7 @@ export class DashboardComponent implements OnInit {
     var codEmpresa = this.consultaForm.controls.codEmprTrans.value;
     this.codRucView=true;
     if (codEmpresa.length == 0 || codEmpresa== undefined || codEmpresa==null ){
-      this.consultaForm.controls.numeroRucEmprTrans.setValue('');
+
       this.consultaForm.controls.numeroRucEmprTrans.enable();
       this.consultaForm.controls.codEmprTrans.enable();
       return;
@@ -491,25 +490,21 @@ export class DashboardComponent implements OnInit {
     if (!regexp.test(codEmpresa)) {
       this.messageService.add({ key: 'msj', severity: 'warn', detail: 'Ingrese correctamente el código de empresa' });
       this.consultaForm.controls.codEmprTrans.enable();
-      this.consultaForm.controls.numeroRucEmprTrans.setValue('');
+
       this.consultaForm.controls.numeroRucEmprTrans.enable();
       return;
     }
 
     this.http
       .get<EmpresaTrans>(this.URL_RESOURCE_EMPRESA_TRANS + codEmpresa).subscribe((res: EmpresaTrans) => {
-        this.consultaForm.controls.descRazonSocialEmprTrans.setValue(res.dnombre);
-        this.consultaForm.controls.numeroRucEmprTrans.setValue('');
+        this.consultaForm.controls.descRazonSocialEmprTrans.setValue(res.dnombre);        
         this.consultaForm.controls.numeroRucEmprTrans.disable();
         this.codRucView=true;
       }, error => {
         console.log({ error });
         this.messageService.add({ key: 'msj', severity: 'warn', detail: 'El código de empresa no existe' });
-        this.consultaForm.controls.codEmprTrans.setValue('');
-        this.consultaForm.controls.numeroRucEmprTrans.setValue('');
-        this.consultaForm.controls.descRazonSocialEmprTrans.setValue('');
+        this.consultaForm.controls.codEmprTrans.enable();
         this.consultaForm.controls.numeroRucEmprTrans.enable();
-        this.codRucView=false;
       })
   }
 
@@ -526,7 +521,6 @@ export class DashboardComponent implements OnInit {
     var regexp = new RegExp('^[0-9]{11}$');
 
     if (ruc== undefined || ruc==null || ruc.length == 0){
-      this.consultaForm.controls.numeroRucEmprTrans.setValue('');
       this.consultaForm.controls.numeroRucEmprTrans.enable();
       this.consultaForm.controls.codEmprTrans.enable();
       return;
@@ -534,12 +528,10 @@ export class DashboardComponent implements OnInit {
     if (!regexp.test(ruc)) {
       this.messageService.add({ key: 'msj', severity: 'warn', detail: 'El número de RUC debe tener 11 dígitos' });
       if (tipo == '1') {
-        this.consultaForm.controls.numeroRucEmprTrans.setValue('');
         this.consultaForm.controls.codEmprTrans.enable();
         this.consultaForm.controls.numeroRucEmprTrans.enable();
         this.codEmpresaView=false;
       } else {
-        this.consultaForm.controls.numeroRucEmprTrans.setValue('');
        this.consultaForm.controls.codEmprTrans.enable();
        this.consultaForm.controls.numeroRucEmprTrans.enable();
       }
@@ -561,15 +553,11 @@ export class DashboardComponent implements OnInit {
         var msjError = "";
         if (tipo == '1') {
           msjError = "RUC de la Empresa de Transporte no existe";
-          this.consultaForm.controls.numeroRucEmprTrans.setValue('');
-          this.consultaForm.controls.descRazonSocialEmprTrans.setValue('');
           this.consultaForm.controls.codEmprTrans.enable();
           this.consultaForm.controls.numeroRucEmprTrans.enable();
           this.codEmpresaView=false;
         } else {
           msjError = "RUC del remitente no existe";
-          this.consultaForm.controls.numeroRucRemitente.setValue('');
-          this.consultaForm.controls.descRazonSocialRemitente.setValue('');
           this.consultaForm.controls.codEmprTrans.enable();
           this.consultaForm.controls.numeroRucEmprTrans.enable();
         }
@@ -674,15 +662,14 @@ buscarRUC(tipo: string) {
     } else{
       this.maxLengthNumDoc = 6;
     }
- 
     this.consultaForm = this.formBuilder.group({
-      codEmprTrans: [{ value: '', disabled: false}],
+      codEmprTrans: [{ value: '', disabled: false }],
       tipoDocumento: [{ value: '1', disabled: false}, Validators.required],
       estado: ['01'],
       tipoControl: [{ value:' ', disabled: false}],
       codPaisPlaca: [''],
       numPlaca: [''],
-      numeroRucEmprTrans:[{ value: '', disabled: false}],
+      numeroRucEmprTrans: [{ value: '', disabled: false }],
       tipoBusqueda: ['', [Validators.required]],
       codAduanaDocumento: [{ value:this.aduanaFuncionarioLogueo, disabled: true }],
       codPuestoControl: [{ value: '', disabled: true }],
@@ -699,12 +686,14 @@ buscarRUC(tipo: string) {
       descRazonSocialRemitente: new FormControl()
     });
     //this.buscarRUCIntranet('1');
-
+    
     this.consultaForm.controls.codEmprTrans.enable();
     this.consultaForm.controls.numeroRucEmprTrans.enable();
     this.codEmpresaView=false;
     this.codRucView=false;
     this.cargarAduanaPuno(this.aduanaFuncionarioLogueo);
+    
+
   }
 
 
