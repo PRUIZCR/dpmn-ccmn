@@ -16,11 +16,11 @@
           <label>Empresa de Transporte: </label>
         </div>
          <div  class="field col-12 md:col-2" >
-          <input type="text" class="form-control" id="txtCodEmprTrans" formControlName="codEmprTrans" pKeyFilter="pint"
+          <input type="text" class="form-control" [readonly]="codEmpresaView" id="txtCodEmprTrans" formControlName="codEmprTrans" pKeyFilter="pint"
             placeholder="Código" maxlength="6" (blur)="buscarEmprTrans()">
         </div>
           <div class="field col-12 md:col-2" >
-            <input type="text" class="form-control" id="txtNumeroRucEmprTrans" formControlName="numeroRucEmprTrans"
+            <input type="text" class="form-control" [readonly]="codRucView" id="txtNumeroRucEmprTrans" formControlName="numeroRucEmprTrans"
               pKeyFilter="pint" placeholder="Número de RUC" maxlength="11" (blur)="buscarRUCIntranet('1')" >
           </div>
           <!--<ng-template #notipo1>
@@ -35,25 +35,28 @@
 
         <!--Row 2-->
         <div class="field col-12 md:col-2">
-          <label>Tipo de Documento: </label>
+          <label >Tipo de Documento: </label>
         </div>
         <div class="field col-12 md:col-2">
           <p-dropdown inputId="tipoDoc" [options]="lstTipoDocumento" formControlName="tipoDocumento" placeholder="Seleccionar"
-            optionLabel="descripcion" optionValue="codigo" (onChange)="onChangeTipoDoc()"></p-dropdown>
+            optionLabel="descripcion" optionValue="codigo" (onChange)="onChangeTipoDoc()"  [style]="{'width':'100%'}"></p-dropdown>
         </div>
         <div class="field col-12 md:col-2">
-          <label>Estado del documento: </label>
+          <div class="text-left">Estado del documento: </div>
         </div>
         <div class="field col-12 md:col-2">
           <p-dropdown [style]="{'width':'180px'}" inputId="estado" [options]="lstEstados" formControlName="estado" placeholder="Seleccionar"
-            optionLabel="descripcion" optionValue="codigo"></p-dropdown>
+            optionLabel="descripcion" optionValue="codigo"  [style]="{'width':'100%'}"></p-dropdown>
         </div>
-        <div class="field col-12 md:col-2">
+        <div class="field col-12 md:col-1">
+        
+        </div>
+        <div class="field col-12 md:col-1">
           <label>Tipo de Control: </label>
         </div>
         <div class="field col-12 md:col-2">
           <p-dropdown inputId="tipoCont" [options]="lstTipoControl" formControlName="tipoControl" placeholder="Seleccionar"
-            optionLabel="descripcion" optionValue="codigo"></p-dropdown>
+            optionLabel="descripcion" optionValue="codigo"  [style]="{'width':'100%'}"></p-dropdown>
         </div>
 
         <!--Row 3-->
@@ -62,23 +65,33 @@
         </div>
         <div class="field col-12 md:col-4">
           <p-dropdown *ngIf="aduanaFuncionarioLogueo=='019' else paisPuno" [filter]="true"   inputId="paisPlaca" [options]="lstPaisVehiculo" formControlName="codPaisPlaca" placeholder="Seleccionar"
-            optionLabel="descripcion" optionValue="codigo"></p-dropdown>
+            optionLabel="descripcion" optionValue="codigo" [style]="{'width':'100%'}" ></p-dropdown>
         </div>
         <ng-template #paisPuno>
           <div class="field col-12 md:col-4">
             <p-dropdown *ngIf="aduanaFuncionarioLogueo=='181' else paisTacna" [filter]="true"   inputId="paisPlaca" [options]="lstPaisVehiculoPuno" formControlName="codPaisPlaca" placeholder="Seleccionar"
-            optionLabel="descripcion" optionValue="codigo" ></p-dropdown>
+            optionLabel="descripcion" optionValue="codigo"    [style]="{'width':'100%'}"></p-dropdown>
           </div>
         </ng-template>
         <ng-template #paisTacna>
           <div class="field col-12 md:col-4">
-            <p-dropdown  [filter]="true"   inputId="paisPlaca" [options]="lstPaisVehiculoTacna" formControlName="codPaisPlaca" placeholder="Seleccionar"
-            optionLabel="descripcion" optionValue="codigo" ></p-dropdown>
+            <p-dropdown *ngIf="aduanaFuncionarioLogueo=='172' else paisTodos" [filter]="true"   inputId="paisPlaca" [options]="lstPaisVehiculoTacna" formControlName="codPaisPlaca" placeholder="Seleccionar"
+            optionLabel="descripcion" optionValue="codigo"  [style]="{'width':'100%'}"></p-dropdown>
           </div>
         </ng-template>
-        <div class="field col-12 md:col-6">
+        <ng-template #paisTodos>
+          <div class="field col-12 md:col-4">
+            <p-dropdown [filter]="true"   inputId="paisPlaca" [options]="lstPaisVehiculo" formControlName="codPaisPlaca" placeholder="Seleccionar"
+            optionLabel="descripcion" optionValue="codigo" [style]="{'minWidth':'100%'}"></p-dropdown>
+          </div>
+        </ng-template>
+
+        <div class="field col-12 md:col-2">
           <input type="text" class="form-control" id="txtNumPlaca" formControlName="numPlaca" 
-          placeholder="Número de Placa" maxlength="8" (blur)="validarPlaca()">
+          placeholder="Número de Placa" maxlength="8" (blur)="validarPlaca()"  oninput="this.value = this.value.toUpperCase()">
+        </div>
+        <div class="field col-12 md:col-4">
+         
         </div>
 
         <!--Row 4-->
@@ -87,7 +100,7 @@
         </div>
         <div class="field col-12 md:col-4">
           <p-dropdown inputId="codAduanaDocumento" [options]="lstAduanaDocumento"  [(ngModel)]="aduanaFuncionario" formControlName="codAduanaDocumento" placeholder="Seleccionar"
-            optionLabel="descripcion" optionValue="codigo" (onChange)="cargarPuestoControl(aduanaFuncionario)"></p-dropdown>
+            optionLabel="descripcion" optionValue="codigo" (onChange)="cargarPuestoControl(aduanaFuncionario)"  [style]="{'width':'100%'}"></p-dropdown>
         </div>
         
         <div class="field col-12 md:col-2">
@@ -123,7 +136,7 @@
 
         <div class="field col-12 md:col-4" *ngIf="tipoOrigen=='IA' else noIntranet">
           <p-dropdown inputId="codAduanaDAM" [options]="lstAduanaDocumento2" [(ngModel)]="aduanaFuncionario" formControlName="codAduanaDAM" placeholder="Seleccionar"
-            optionLabel="descripcion" optionValue="codigo" [readonly]="true"></p-dropdown>
+            optionLabel="descripcion" optionValue="codigo" [readonly]="true"  [style]="{'width':'100%'}"></p-dropdown>
         </div>
 
         <ng-template #noIntranet>
@@ -151,10 +164,10 @@
           <p-radioButton (onClick)="onRadioChange()" name="tipoBusqueda" value="3" label="Fecha de Registro:" formControlName="tipoBusqueda"></p-radioButton>
         </div>
         <div class="field col-12 md:col-4">
-          <p-calendar formControlName="fechaInicio" dateFormat="dd/mm/yy" [maxDate]="date" [showIcon]="true" inputId="icon"></p-calendar>
+          <p-calendar formControlName="fechaInicio" dateFormat="dd/mm/yy" [maxDate]="date" [showIcon]="true" inputId="icon"  [style]="{'width':'100%'}"></p-calendar>
         </div>
         <div class="field col-12 md:col-4">
-          <p-calendar formControlName="fechaFin" dateFormat="dd/mm/yy" [maxDate]="date" [showIcon]="true" inputId="icon"></p-calendar>
+          <p-calendar formControlName="fechaFin" dateFormat="dd/mm/yy" [maxDate]="date" [showIcon]="true" inputId="icon"  [style]="{'width':'100%'}"></p-calendar>
         </div>
       </div>
     </form>
