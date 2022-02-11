@@ -116,11 +116,10 @@ export class DashboardComponent implements OnInit {
     this.nroRegistro = this.tokenAccesoService.nroRegistro;
     this.limpiar();
     this.consultaForm.controls.numeroRucEmprTrans.setValue(this.numeroRUC);
-    this.buscarRUC('1');
     this.cargarAduanaFuncionario(this.nroRegistro);
-    
     this.consultaForm.controls.codAduanaDocumento.setValue(this.aduanaFuncionario);
     this.consultaForm.controls.codAduanaDAM.setValue(this.aduanaFuncionario);
+    this.buscarRUCIntranet('1');
   }
 
   async consultar() {
@@ -349,7 +348,7 @@ export class DashboardComponent implements OnInit {
 
     if (!regexp.test(placa)) {
       this.messageService.add({ key: 'msj', severity: 'warn', detail: 'Placa de vehículo debe tener entre 5 y 8 caracteres' });
-      //this.consultaForm.controls.numPlaca.setValue('');
+      this.consultaForm.controls.numPlaca.setValue(placa);
     }
   }
 
@@ -480,15 +479,18 @@ export class DashboardComponent implements OnInit {
   buscarEmprTrans() {
     var regexp = new RegExp('^[0-9]{4,6}$');
     var codEmpresa = this.consultaForm.controls.codEmprTrans.value;
-    this.consultaForm.controls.numeroRucEmprTrans.disable();
-    if (codEmpresa.length == 0)
-      return;
 
+    if (codEmpresa.length == 0 || codEmpresa== undefined || codEmpresa==null ){
+      this.consultaForm.controls.numeroRucEmprTrans.setValue('');
+      this.consultaForm.controls.numeroRucEmprTrans.enable();
+      this.consultaForm.controls.codEmprTrans.enable();
+      return;
+    }
     if (!regexp.test(codEmpresa)) {
       this.messageService.add({ key: 'msj', severity: 'warn', detail: 'Ingrese correctamente el código de empresa' });
-      this.consultaForm.controls.codEmprTrans.setValue('');
+      this.consultaForm.controls.codEmprTrans.enable();
       this.consultaForm.controls.numeroRucEmprTrans.setValue('');
-      this.consultaForm.controls.numeroRucEmprTrans.disable();
+      this.consultaForm.controls.numeroRucEmprTrans.enable();
       return;
     }
 
@@ -500,7 +502,6 @@ export class DashboardComponent implements OnInit {
       }, error => {
         console.log({ error });
         this.messageService.add({ key: 'msj', severity: 'warn', detail: 'El código de empresa no existe' });
-        this.consultaForm.controls.numeroRucEmprTrans.enable();
         this.consultaForm.controls.codEmprTrans.setValue('');
         this.consultaForm.controls.numeroRucEmprTrans.setValue('');
         this.consultaForm.controls.descRazonSocialEmprTrans.setValue('');
@@ -510,7 +511,7 @@ export class DashboardComponent implements OnInit {
 
   /*Obtiene la razon social por RUC*/
   buscarRUCIntranet(tipo: string) {
-    this.consultaForm.controls.codEmprTrans.disable();
+  
     var ruc = '';
     if (tipo == '1') {
       ruc = this.consultaForm.controls.numeroRucEmprTrans.value;
@@ -531,9 +532,11 @@ export class DashboardComponent implements OnInit {
       if (tipo == '1') {
         this.consultaForm.controls.numeroRucEmprTrans.setValue('');
         this.consultaForm.controls.codEmprTrans.enable();
+        this.consultaForm.controls.numeroRucEmprTrans.enable();
       } else {
-        this.consultaForm.controls.numeroRucRemitente.setValue('');
+        this.consultaForm.controls.numeroRucEmprTrans.setValue('');
        this.consultaForm.controls.codEmprTrans.enable();
+       this.consultaForm.controls.numeroRucEmprTrans.enable();
       }
       return;
     }
@@ -555,11 +558,13 @@ export class DashboardComponent implements OnInit {
           this.consultaForm.controls.numeroRucEmprTrans.setValue('');
           this.consultaForm.controls.descRazonSocialEmprTrans.setValue('');
           this.consultaForm.controls.codEmprTrans.enable();
+          this.consultaForm.controls.numeroRucEmprTrans.enable();
         } else {
           msjError = "RUC del remitente no existe";
           this.consultaForm.controls.numeroRucRemitente.setValue('');
           this.consultaForm.controls.descRazonSocialRemitente.setValue('');
           this.consultaForm.controls.codEmprTrans.enable();
+          this.consultaForm.controls.numeroRucEmprTrans.enable();
         }
         this.messageService.add({ key: 'msj', severity: 'warn', detail: msjError });
       })
@@ -662,6 +667,7 @@ buscarRUC(tipo: string) {
     } else{
       this.maxLengthNumDoc = 6;
     }
+ 
     this.consultaForm = this.formBuilder.group({
       codEmprTrans: [''],
       tipoDocumento: [{ value: '1', disabled: false}, Validators.required],
@@ -669,7 +675,7 @@ buscarRUC(tipo: string) {
       tipoControl: [{ value:' ', disabled: false}],
       codPaisPlaca: [''],
       numPlaca: [''],
-      numeroRucEmprTrans: [''],
+      numeroRucEmprTrans:[''],
       tipoBusqueda: ['', [Validators.required]],
       codAduanaDocumento: [{ value:this.aduanaFuncionarioLogueo, disabled: true }],
       codPuestoControl: [{ value: '', disabled: true }],
@@ -685,13 +691,11 @@ buscarRUC(tipo: string) {
       descRazonSocialEmprTrans: new FormControl(),
       descRazonSocialRemitente: new FormControl()
     });
-    this.buscarRUCIntranet('1');
-    this.consultaForm.controls.codEmprTrans.setValue('');
-    this.consultaForm.controls.numeroRucEmprTrans.setValue('');
+    //this.buscarRUCIntranet('1');
+
     this.consultaForm.controls.codEmprTrans.enable();
     this.consultaForm.controls.numeroRucEmprTrans.enable();
     this.cargarAduanaPuno(this.aduanaFuncionarioLogueo);
-
   }
 
 
