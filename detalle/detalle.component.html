@@ -302,7 +302,7 @@
                     <td style="width:15%">{{comprobantes.desRazonSocialDestinatario}}</td>
                     <td style="width:15%"  *ngIf="tipoOrigen=='IT' else FADestino">{{comprobantes.ubigeoDestino.nomDepartamento}}-{{comprobantes.ubigeoDestino.nomProvincia}}-{{comprobantes.ubigeoDestino.nomDistrito}}</td>
                     <ng-template #FADestino>
-                      <td style="width:15%" >{{comprobantes.ubigeoDestino.nomDepartamento}}-{{comprobantes.ubigeoDestino.nomProvincia}}-{{comprobantes.ubigeoDestino.nomDistrito}}-</td>
+                      <td style="width:15%" >{{comprobantes.ubigeoDestino.nomDepartamento}}-{{comprobantes.ubigeoDestino.nomProvincia}}-{{comprobantes.ubigeoDestino.nomDistrito}}</td>
                     </ng-template>
                 </tr>
             </ng-template>
