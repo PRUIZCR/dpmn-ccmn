@@ -57,6 +57,7 @@ export class DashboardComponent implements OnInit {
   codRucView: boolean = true;
   cantPuestoControl:number;
   esVisibleFuncAduan: boolean = true;
+  esReadonlyruc:string;
   aduanaFuncionario:string;
   aduanaFuncionarioLogueo:string;
   puestoControlFuncionarioLogueo:string;
@@ -126,12 +127,11 @@ export class DashboardComponent implements OnInit {
       this.lstPaisVehiculo=this.lstPaisVehiculoPuno;
     }
     this.limpiar();
-
     this.consultaForm.controls.codAduanaDocumento.setValue(this.aduanaFuncionario);
     this.consultaForm.controls.codAduanaDAM.setValue(this.aduanaFuncionario);
     if(this.tipoOrigen=="IT"){
     this.consultaForm.controls.numeroRucEmprTrans.setValue(this.numeroRUC);
-    this.buscarRUCIntranet('1');
+    this.buscarRUCIntranet();
   }
   }
 
@@ -411,6 +411,10 @@ export class DashboardComponent implements OnInit {
            datCatPtoControl.descripcion = "CAF Santa Rosa";
            this.lstPuestoControl.push(datCatPtoControl);
         }
+        this.lstPuestoControl.forEach((res:any)=>{
+          res.descripcion=res.codigo +'-'+ res.descripcion
+        })
+        
       }, error => {
         console.log({ error });
       })
@@ -490,9 +494,13 @@ export class DashboardComponent implements OnInit {
 
   /*Obtiene el nombre por Codigo de Empresa*/
   buscarEmprTrans() {
+    if(this.esReadonlyruc=="1"){
+      this.codEmpresaView=false;
+      return;
+      }
     var regexp = new RegExp('^[0-9]{4,6}$');
     var codEmpresa = this.consultaForm.controls.codEmprTrans.value;
-    this.codRucView=true;
+ 
     if (codEmpresa =='' || codEmpresa== undefined || codEmpresa==null ){
       this.consultaForm.controls.numeroRucEmprTrans.setValue('');
       this.consultaForm.controls.numeroRucEmprTrans.enable();
@@ -512,8 +520,8 @@ export class DashboardComponent implements OnInit {
       .get<EmpresaTrans>(this.URL_RESOURCE_EMPRESA_TRANS + codEmpresa).subscribe((res: EmpresaTrans) => {
         this.consultaForm.controls.descRazonSocialEmprTrans.setValue(res.dnombre);
         this.consultaForm.controls.numeroRucEmprTrans.setValue('');
-        this.consultaForm.controls.numeroRucEmprTrans.disable();
         this.codRucView=false;
+        this.esReadonlyruc="1";
       }, error => {
         console.log({ error });
         this.messageService.add({ key: 'msj', severity: 'warn', detail: 'El código de empresa no existe' });
@@ -522,71 +530,79 @@ export class DashboardComponent implements OnInit {
         this.consultaForm.controls.descRazonSocialEmprTrans.setValue('');
         this.consultaForm.controls.numeroRucEmprTrans.enable();
         this.codRucView=false;
+        this.esReadonlyruc="2";
       })
   }
 
   /*Obtiene la razon social por RUC*/
-  buscarRUCIntranet(tipo: string) {
+  buscarRUCIntranet() {
+    if(this.esReadonlyruc=="1"){
     this.codEmpresaView=true;
-    var ruc = '';
-    if (tipo == '1') {
+    return;
+    }
+    //var ruc = '';
+   var  ruc = this.consultaForm.controls.numeroRucEmprTrans.value;
+    /*if (tipo == '1') {
       ruc = this.consultaForm.controls.numeroRucEmprTrans.value;
     } else {
       ruc = this.consultaForm.controls.numeroRucRemitente.value;
-    }
+    }*/
 
     var regexp = new RegExp('^[0-9]{11}$');
 
-    if (ruc== undefined || ruc==null || ruc.length == 0){
-      this.consultaForm.controls.numeroRucEmprTrans.setValue(null);
+    if (ruc== undefined || ruc==null || ruc.length == 0 || ruc==''){
+      //this.consultaForm.controls.numeroRucEmprTrans.setValue(ruc);
       this.consultaForm.controls.numeroRucEmprTrans.enable();
       this.consultaForm.controls.codEmprTrans.enable();
+      this.codEmpresaView=false;
+      //alert('this.codRucView '+ this.codRucView);
+      this.codRucView=false;
       return;
     }
     if (!regexp.test(ruc)) {
       this.messageService.add({ key: 'msj', severity: 'warn', detail: 'El número de RUC debe tener 11 dígitos' });
-      if (tipo == '1') {
+     // if (tipo == '1') {
         this.consultaForm.controls.numeroRucEmprTrans.setValue(ruc);
         this.consultaForm.controls.codEmprTrans.enable();
-        this.consultaForm.controls.numeroRucEmprTrans.enable();
         this.codEmpresaView=false;
-      } else {
-        this.consultaForm.controls.numeroRucEmprTrans.setValue(ruc);
+     // } else {
+       /* this.consultaForm.controls.numeroRucEmprTrans.setValue(ruc);
        this.consultaForm.controls.codEmprTrans.enable();
-       this.consultaForm.controls.numeroRucEmprTrans.enable();
-      }
+       this.consultaForm.controls.numeroRucEmprTrans.enable();*/
+     // }
       return;
     }
 
     this.http
       .get<Ruc>(this.RESOURCE_RUC + ruc).subscribe((res: Ruc) => {
-        if (tipo == '1') {
+       // if (tipo == '1') {
           this.consultaForm.controls.descRazonSocialEmprTrans.setValue(res.razonSocial);
           this.codEmpresaView=false;
-        } else {
-          this.consultaForm.controls.descRazonSocialRemitente.setValue(res.razonSocial);
-          this.consultaForm.controls.codEmprTrans.disable();
-        }
+       // } else {
+         /* this.consultaForm.controls.descRazonSocialRemitente.setValue(res.razonSocial);
+          this.consultaForm.controls.codEmprTrans.disable();*/
+     //   }
       }, error => {
         this.codEmpresaView=false;
         console.log({ error });
         var msjError = "";
-        if (tipo == '1') {
+        //*if (tipo == '1') {
           msjError = "RUC de la Empresa de Transporte no existe";
           this.consultaForm.controls.numeroRucEmprTrans.setValue(ruc);
           this.consultaForm.controls.descRazonSocialEmprTrans.setValue('');
           this.consultaForm.controls.codEmprTrans.enable();
           this.consultaForm.controls.numeroRucEmprTrans.enable();
           this.codEmpresaView=false;
-        } else {
-          msjError = "RUC del remitente no existe";
+        //} else {
+          /*msjError = "RUC del remitente no existe";
           this.consultaForm.controls.numeroRucRemitente.setValue(ruc);
           this.consultaForm.controls.descRazonSocialRemitente.setValue('');
           this.consultaForm.controls.codEmprTrans.enable();
-          this.consultaForm.controls.numeroRucEmprTrans.enable();
-        }
+          this.consultaForm.controls.numeroRucEmprTrans.enable();*/
+       // }
         this.messageService.add({ key: 'msj', severity: 'warn', detail: msjError });
       })
+    
   }
 /*Obtiene la razon social por RUC*/
 buscarRUC(tipo: string) {
@@ -681,20 +697,21 @@ buscarRUC(tipo: string) {
   }
 
   limpiar(){
+    this.codEmpresaView=false;
+    this.codRucView=false;
     if(this.tipoOrigen = "IA"){
     this.maxLengthNumDoc = 10;
     } else{
       this.maxLengthNumDoc = 6;
     }
- 
     this.consultaForm = this.formBuilder.group({
-      codEmprTrans: [{ value: '', disabled: false}],
+      codEmprTrans: [''],
       tipoDocumento: [{ value: '1', disabled: false}, Validators.required],
       estado: ['01'],
       tipoControl: [{ value:' ', disabled: false}],
       codPaisPlaca: [''],
       numPlaca: [''],
-      numeroRucEmprTrans:[{ value: null, disabled: false}],
+      numeroRucEmprTrans:[{value:'', disabled: true}],
       tipoBusqueda: ['', [Validators.required]],
       codAduanaDocumento: [{ value:this.aduanaFuncionarioLogueo, disabled: true }],
       codPuestoControl: [{ value: '', disabled: true }],
@@ -708,17 +725,17 @@ buscarRUC(tipo: string) {
       fechaInicio: new FormControl({ value: new Date(this.date.getFullYear(), this.date.getMonth(), 1), disabled: true }),
       fechaFin: new FormControl({ value: this.date, disabled: true }),
       descRazonSocialEmprTrans: new FormControl(),
-      descRazonSocialRemitente: new FormControl()
+      descRazonSocialRemitente: new FormControl(),
+      //numeroRucEmprTrans:new FormControl()
     });
-    //this.buscarRUCIntranet('1');
-    this.consultaForm.controls.numeroRucEmprTrans.setValue(null);
+    this.buscarRUCIntranet();
+    this.buscarEmprTrans();
     this.consultaForm.controls.numeroRucEmprTrans.enable();
     this.consultaForm.controls.codEmprTrans.enable();
-    this.codEmpresaView=false;
-    this.codRucView=false;
-    this.cargarAduanaPuno(this.aduanaFuncionarioLogueo);
-    console.log('codempresa:' + this.consultaForm.controls.codEmprTrans.value);
-    console.log('numeroRucEmprTrans:' + this.consultaForm.controls.numeroRucEmprTrans.value);
+    const valores: any = Object.assign({}, this.consultaForm.getRawValue());
+    this.esReadonlyruc="2";
+     console.log('valores: ' + valores);
+    //this.consultaForm.reset();
   }
 
 
