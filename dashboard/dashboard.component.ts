@@ -556,8 +556,6 @@ export class DashboardComponent implements OnInit {
       this.consultaForm.controls.numeroRucEmprTrans.enable();
       this.consultaForm.controls.codEmprTrans.enable();
       this.codEmpresaView=false;
-      //alert('this.codRucView '+ this.codRucView);
-      this.codRucView=false;
       return;
     }
     if (!regexp.test(ruc)) {
