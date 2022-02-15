@@ -58,6 +58,7 @@ export class DashboardComponent implements OnInit {
   cantPuestoControl:number;
   esVisibleFuncAduan: boolean = true;
   esReadonlyruc:string;
+  esReadonlycodigo:string;
   aduanaFuncionario:string;
   aduanaFuncionarioLogueo:string;
   puestoControlFuncionarioLogueo:string;
@@ -536,8 +537,8 @@ export class DashboardComponent implements OnInit {
 
   /*Obtiene la razon social por RUC*/
   buscarRUCIntranet() {
-    if(this.esReadonlyruc=="1"){
-    this.codEmpresaView=true;
+    if(this.esReadonlycodigo=="1"){
+    this.codRucView=false;
     return;
     }
     //var ruc = '';
@@ -562,9 +563,11 @@ export class DashboardComponent implements OnInit {
     if (!regexp.test(ruc)) {
       this.messageService.add({ key: 'msj', severity: 'warn', detail: 'El número de RUC debe tener 11 dígitos' });
      // if (tipo == '1') {
-        this.consultaForm.controls.numeroRucEmprTrans.setValue(ruc);
+        //this.consultaForm.controls.numeroRucEmprTrans.setValue(ruc);
+        this.consultaForm.controls.codEmprTrans.setValue('');
         this.consultaForm.controls.codEmprTrans.enable();
         this.codEmpresaView=false;
+        this.esReadonlycodigo="2";
      // } else {
        /* this.consultaForm.controls.numeroRucEmprTrans.setValue(ruc);
        this.consultaForm.controls.codEmprTrans.enable();
@@ -578,12 +581,13 @@ export class DashboardComponent implements OnInit {
        // if (tipo == '1') {
           this.consultaForm.controls.descRazonSocialEmprTrans.setValue(res.razonSocial);
           this.codEmpresaView=false;
+          this.esReadonlycodigo="1";
        // } else {
          /* this.consultaForm.controls.descRazonSocialRemitente.setValue(res.razonSocial);
           this.consultaForm.controls.codEmprTrans.disable();*/
      //   }
       }, error => {
-        this.codEmpresaView=false;
+        
         console.log({ error });
         var msjError = "";
         //*if (tipo == '1') {
@@ -593,6 +597,7 @@ export class DashboardComponent implements OnInit {
           this.consultaForm.controls.codEmprTrans.enable();
           this.consultaForm.controls.numeroRucEmprTrans.enable();
           this.codEmpresaView=false;
+          this.esReadonlycodigo="2";
         //} else {
           /*msjError = "RUC del remitente no existe";
           this.consultaForm.controls.numeroRucRemitente.setValue(ruc);
