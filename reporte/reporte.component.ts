@@ -47,7 +47,7 @@ export class ReporteComponent implements OnInit {
   totalesFuncionarioAduanero:totalesFuncionarioAduanero[];
   totalesPorFuncionarioAduanero:number=0;
   totalesUsuarioExterno:totalesUsuarioExterno[];
-  totalesPorUsuarioExterno:number|null=0;
+  totalesPorUsuarioExterno:number=0;
   urlConsultaDetalleTitulo="";
 
   public reporteresumidoCcmn: reporteresumido[]=new Array();
@@ -323,7 +323,7 @@ export class ReporteComponent implements OnInit {
   cargandoTotalesUsuarioExterno(data: reporteresumido){
     this.totalesUsuarioExterno=data.totalesPorUsuarioExterno;
     console.log('totalesPorUsuarioExterno' + data.totalesPorUsuarioExterno);
-    this.totalesPorUsuarioExterno=data.totalPorUsuarioExterno;
+    this.totalesPorUsuarioExterno=data?.totalPorUsuarioExterno!=null?0:0;
   }
   exportarpdfResumido(nomArch: string) {
     this.documentos = new Array();
