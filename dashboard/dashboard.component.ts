@@ -495,10 +495,7 @@ export class DashboardComponent implements OnInit {
 
   /*Obtiene el nombre por Codigo de Empresa*/
   buscarEmprTrans() {
-    if(this.esReadonlycodigo=="1"){
-      this.codEmpresaView=false;
-      return;
-      }
+   
     var regexp = new RegExp('^[0-9]{4,6}$');
     var codEmpresa = this.consultaForm.controls.codEmprTrans.value;
  
@@ -516,7 +513,10 @@ export class DashboardComponent implements OnInit {
       this.codRucView=false;
       return;
     }
-
+    if(this.esReadonlycodigo=="1"){
+      this.codEmpresaView=false;
+      return;
+      }
     this.http
       .get<EmpresaTrans>(this.URL_RESOURCE_EMPRESA_TRANS + codEmpresa).subscribe((res: EmpresaTrans) => {
         this.consultaForm.controls.descRazonSocialEmprTrans.setValue(res.dnombre);
@@ -539,10 +539,7 @@ export class DashboardComponent implements OnInit {
 
   /*Obtiene la razon social por RUC*/
   buscarRUCIntranet() {
-    if(this.esReadonlyruc=="1"||this.esReadonlycodigo=="1"){
-    this.codRucView=false;
-    return;
-    }
+  
    var  ruc = this.consultaForm.controls.numeroRucEmprTrans.value;
     var regexp = new RegExp('^[0-9]{11}$');
 
@@ -568,7 +565,10 @@ export class DashboardComponent implements OnInit {
      // }
       return;
     }
-
+    if(this.esReadonlyruc=="1"||this.esReadonlycodigo=="1"){
+      this.codRucView=false;
+      return;
+      }
 
     this.http
       .get<Ruc>(this.RESOURCE_RUC + ruc).subscribe((res: Ruc) => {
