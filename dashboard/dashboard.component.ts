@@ -495,7 +495,7 @@ export class DashboardComponent implements OnInit {
 
   /*Obtiene el nombre por Codigo de Empresa*/
   buscarEmprTrans() {
-    if(this.esReadonlyruc=="1"){
+    if(this.esReadonlycodigo=="1"){
       this.codEmpresaView=false;
       return;
       }
@@ -520,15 +520,17 @@ export class DashboardComponent implements OnInit {
     this.http
       .get<EmpresaTrans>(this.URL_RESOURCE_EMPRESA_TRANS + codEmpresa).subscribe((res: EmpresaTrans) => {
         this.consultaForm.controls.descRazonSocialEmprTrans.setValue(res.dnombre);
+        this.codRucView=true;
+        this.esReadonlyruc="2";
+        this.esReadonlycodigo=="1"
         this.consultaForm.controls.numeroRucEmprTrans.setValue('');
-        this.codRucView=false;
-        this.esReadonlyruc="1";
       }, error => {
         console.log({ error });
         this.messageService.add({ key: 'msj', severity: 'warn', detail: 'El código de empresa no existe' });
         this.consultaForm.controls.codEmprTrans.setValue('');
         this.consultaForm.controls.numeroRucEmprTrans.setValue('');
         this.consultaForm.controls.descRazonSocialEmprTrans.setValue('');
+        this.consultaForm.controls.numeroRucEmprTrans.setValue('');
         this.consultaForm.controls.numeroRucEmprTrans.enable();
         this.codRucView=false;
         this.esReadonlyruc="2";
@@ -537,18 +539,11 @@ export class DashboardComponent implements OnInit {
 
   /*Obtiene la razon social por RUC*/
   buscarRUCIntranet() {
-    if(this.esReadonlycodigo=="1"){
+    if(this.esReadonlyruc=="1"||this.esReadonlycodigo=="1"){
     this.codRucView=false;
     return;
     }
-    //var ruc = '';
    var  ruc = this.consultaForm.controls.numeroRucEmprTrans.value;
-    /*if (tipo == '1') {
-      ruc = this.consultaForm.controls.numeroRucEmprTrans.value;
-    } else {
-      ruc = this.consultaForm.controls.numeroRucRemitente.value;
-    }*/
-
     var regexp = new RegExp('^[0-9]{11}$');
 
     if (ruc== undefined || ruc==null || ruc.length == 0 || ruc==''){
@@ -574,12 +569,16 @@ export class DashboardComponent implements OnInit {
       return;
     }
 
+
     this.http
       .get<Ruc>(this.RESOURCE_RUC + ruc).subscribe((res: Ruc) => {
        // if (tipo == '1') {
           this.consultaForm.controls.descRazonSocialEmprTrans.setValue(res.razonSocial);
-          this.codEmpresaView=false;
-          this.esReadonlycodigo="1";
+          this.codEmpresaView=true; 
+          this.codRucView=false;
+          this.esReadonlyruc="1";
+          this.esReadonlycodigo=="2"
+          this.consultaForm.controls.codEmprTrans.setValue('');
        // } else {
          /* this.consultaForm.controls.descRazonSocialRemitente.setValue(res.razonSocial);
           this.consultaForm.controls.codEmprTrans.disable();*/
@@ -590,12 +589,15 @@ export class DashboardComponent implements OnInit {
         var msjError = "";
         //*if (tipo == '1') {
           msjError = "RUC de la Empresa de Transporte no existe";
-          this.consultaForm.controls.numeroRucEmprTrans.setValue(ruc);
+          this.consultaForm.controls.numeroRucEmprTrans.setValue('');
+          this.consultaForm.controls.codEmprTrans.setValue('');
           this.consultaForm.controls.descRazonSocialEmprTrans.setValue('');
           this.consultaForm.controls.codEmprTrans.enable();
           this.consultaForm.controls.numeroRucEmprTrans.enable();
           this.codEmpresaView=false;
+          this.codRucView=false;
           this.esReadonlycodigo="2";
+          this.esReadonlyruc="2";
         //} else {
           /*msjError = "RUC del remitente no existe";
           this.consultaForm.controls.numeroRucRemitente.setValue(ruc);
@@ -624,7 +626,7 @@ buscarRUC(tipo: string) {
   if (!regexp.test(ruc)) {
     this.messageService.add({ key: 'msj', severity: 'warn', detail: 'El número de RUC debe tener 11 dígitos' });
     if (tipo == '1') {
-      this.consultaForm.controls.numeroRucEmprTrans.setValue(ruc);
+      
     } else {
       this.consultaForm.controls.numeroRucRemitente.setValue(ruc);
     }
@@ -643,7 +645,7 @@ buscarRUC(tipo: string) {
       var msjError = "";
       if (tipo == '1') {
         msjError = "RUC de la Empresa de Transporte no existe";
-        this.consultaForm.controls.numeroRucEmprTrans.setValue(ruc);
+       
         this.consultaForm.controls.descRazonSocialEmprTrans.setValue('');
       } else {
         msjError = "RUC del remitente no existe";
@@ -731,13 +733,13 @@ buscarRUC(tipo: string) {
       descRazonSocialRemitente: new FormControl(),
       //numeroRucEmprTrans:new FormControl()
     });
-    this.buscarRUCIntranet();
-    this.buscarEmprTrans();
+
     this.consultaForm.controls.numeroRucEmprTrans.enable();
     this.consultaForm.controls.codEmprTrans.enable();
     const valores: any = Object.assign({}, this.consultaForm.getRawValue());
     this.esReadonlyruc="2";
-     console.log('valores: ' + valores);
+    this.esReadonlycodigo="2";
+     console.log('valores: ' + this.esReadonlyruc,this.esReadonlycodigo);
     //this.consultaForm.reset();
   }
 
